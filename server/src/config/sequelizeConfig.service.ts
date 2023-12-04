@@ -11,25 +11,28 @@ export class SequelizeConfigService implements SequelizeOptionsFactory {
   constructor(private readonly configService: ConfigService) {}
 
   createSequelizeOptions(): SequelizeModuleOptions {
-    const {
-      sql: { dialect, logging, host, port, username, password, database },
-    } = this.configService.get('database');
+    try {
+      const {
+        sql: { dialect, host, port, username, password, database },
+      } = this.configService.get('database');
 
-    return {
-      dialect,
-      logging,
-      host,
-      port,
-      username,
-      password,
-      database,
-      models: [User],
-      autoLoadModels: true,
-      synchronize: true,
-      define: {
-        charset: 'utf8',
-        collate: 'utf8_general_cli',
-      },
-    };
+      return {
+        dialect,
+        logging: console.error,
+        host,
+        port,
+        username,
+        password,
+        database,
+        models: [User],
+        autoLoadModels: true,
+        define: {
+          charset: 'utf8',
+          collate: 'utf8_general_cli',
+        },
+      };
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

@@ -2,21 +2,30 @@ import { Module } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule } from '@nestjs/config';
-import { SequelizeConfigService } from './config/sequelizeConfig.service';
-import { databaseConfig } from './config/configuration';
+import { Dialect } from 'sequelize';
+import { User } from './users/users.model';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   controllers: [],
   providers: [],
   imports: [
-    SequelizeModule.forRootAsync({
-      imports: [ConfigModule],
-      useClass: SequelizeConfigService,
-    }),
     ConfigModule.forRoot({
-      load: [databaseConfig],
+      envFilePath: `.${process.env.NODE_ENV}.env`,
+    }),
+    SequelizeModule.forRoot({
+      dialect: <Dialect>process.env.SQL_DIALECT || 'mysql',
+      logging: console.error,
+      host: process.env.DB_HOST,
+      port: Number(process.env.DB_PORT),
+      username: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+      models: [User],
+      autoLoadModels: true,
     }),
     UsersModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
