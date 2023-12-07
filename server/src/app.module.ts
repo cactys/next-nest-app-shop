@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { Dialect } from 'sequelize';
 import { User } from './users/users.model';
 import { AuthModule } from './auth/auth.module';
+import { ProductPartsModule } from './product-parts/product-parts.module';
 
 @Module({
   controllers: [],
@@ -26,6 +27,7 @@ import { AuthModule } from './auth/auth.module';
     }),
     UsersModule,
     AuthModule,
+    ProductPartsModule,
   ],
 })
 export class AppModule {}
