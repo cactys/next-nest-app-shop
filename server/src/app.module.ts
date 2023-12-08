@@ -6,6 +6,7 @@ import { Dialect } from 'sequelize';
 import { User } from './users/users.model';
 import { AuthModule } from './auth/auth.module';
 import { ProductPartsModule } from './product-parts/product-parts.module';
+import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
 
 @Module({
   controllers: [],
@@ -28,6 +29,7 @@ import { ProductPartsModule } from './product-parts/product-parts.module';
     UsersModule,
     AuthModule,
     ProductPartsModule,
+    ShoppingCartModule,
   ],
 })
 export class AppModule {}

@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "QAZwsx!698",
-    "database": "shop_local",
+    "database": "shop",
     "host": "localhost",
     "dialect": "mysql",
     "port": 3306
@@ -10,7 +10,7 @@
   "test": {
     "username": "root",
     "password": "QAZwsx!698",
-    "database": "shop_local",
+    "database": "shop",
     "host": "localhost",
     "dialect": "mysql",
     "port": 3306
@@ -18,7 +18,7 @@
   "production": {
     "username": "root",
     "password": "QAZwsx!698",
-    "database": "shop_local",
+    "database": "shop",
     "host": "localhost",
     "dialect": "mysql",
     "port": 3306
