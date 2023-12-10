@@ -1,6 +1,6 @@
 import { Table, Model, Column } from 'sequelize-typescript';
 
-@Table({ tableName: 'productparts' })
+@Table({ tableName: 'product-parts' })
 export class ProductParts extends Model {
   @Column
   product_manufacturer: string;
