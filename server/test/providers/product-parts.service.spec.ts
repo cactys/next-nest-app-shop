@@ -57,9 +57,116 @@ describe('Product Parts Service', () => {
         new: expect.any(Boolean),
         popularity: expect.any(Number),
         compatibility: expect.any(String),
-        createdAt: expect.any(String),
-        updatedAt: expect.any(String),
+        createdAt: expect.any(Date),
+        updatedAt: expect.any(Date),
       }),
     );
+  });
+
+  it('should find by name', async () => {
+    const part = await productPartsService.findOneByName(
+      'Sufficio asperiores.',
+    );
+
+    expect(part.dataValues).toEqual(
+      expect.objectContaining({
+        id: expect.any(Number),
+        price: expect.any(Number),
+        product_manufacturer: expect.any(String),
+        part_manufacturer: expect.any(String),
+        vendor_code: expect.any(String),
+        name: 'Sufficio asperiores.',
+        description: expect.any(String),
+        images: expect.any(String),
+        in_stock: expect.any(Number),
+        bestseller: expect.any(Boolean),
+        new: expect.any(Boolean),
+        popularity: expect.any(Number),
+        compatibility: expect.any(String),
+        createdAt: expect.any(Date),
+        updatedAt: expect.any(Date),
+      }),
+    );
+  });
+
+  it('should find by search string', async () => {
+    const parts = await productPartsService.searchByString('de');
+
+    expect(parts.rows.length).toBeLessThanOrEqual(20);
+
+    parts.rows.forEach((item) => {
+      expect(item.name.toLowerCase()).toContain('de');
+      expect(item.dataValues).toEqual(
+        expect.objectContaining({
+          id: expect.any(Number),
+          price: expect.any(Number),
+          product_manufacturer: expect.any(String),
+          part_manufacturer: expect.any(String),
+          vendor_code: expect.any(String),
+          name: expect.any(String),
+          description: expect.any(String),
+          images: expect.any(String),
+          in_stock: expect.any(Number),
+          bestseller: expect.any(Boolean),
+          new: expect.any(Boolean),
+          popularity: expect.any(Number),
+          compatibility: expect.any(String),
+          createdAt: expect.any(Date),
+          updatedAt: expect.any(Date),
+        }),
+      );
+    });
+  });
+
+  it('should find bestsellers', async () => {
+    const parts = await productPartsService.bestsellers();
+
+    parts.rows.forEach((item) => {
+      expect(item.dataValues).toEqual(
+        expect.objectContaining({
+          id: expect.any(Number),
+          price: expect.any(Number),
+          product_manufacturer: expect.any(String),
+          part_manufacturer: expect.any(String),
+          vendor_code: expect.any(String),
+          name: expect.any(String),
+          description: expect.any(String),
+          images: expect.any(String),
+          in_stock: expect.any(Number),
+          bestseller: true,
+          new: expect.any(Boolean),
+          popularity: expect.any(Number),
+          compatibility: expect.any(String),
+          createdAt: expect.any(Date),
+          updatedAt: expect.any(Date),
+        }),
+      );
+    });
+  });
+
+  it('should find new parts', async () => {
+    const parts = await productPartsService.new();
+
+    parts.rows.forEach((item) => {
+      expect(item.dataValues).toEqual(
+        expect.objectContaining({
+          id: expect.any(Number),
+          price: expect.any(Number),
+          product_manufacturer: expect.any(String),
+          part_manufacturer: expect.any(String),
+          vendor_code: expect.any(String),
+          name: expect.any(String),
+          description: expect.any(String),
+          images: expect.any(String),
+          in_stock: expect.any(Number),
+          bestseller: expect.any(Boolean),
+          new: true,
+          popularity: expect.any(Number),
+          compatibility: expect.any(String),
+          createdAt: expect.any(Date),
+          updatedAt: expect.any(Date),
+        }),
+      );
+    });
   });
 });
