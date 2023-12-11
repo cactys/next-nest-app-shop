@@ -36,7 +36,7 @@ export class ProductPartsController {
   @UseGuards(AuthenticatedGuard)
   @Get('find/:id')
   getOne(@Param('id') id: string) {
-    return this.productPartsService.findOne(id);
+    return this.productPartsService.findOne(+id);
   }
 
   @ApiOkResponse({ type: GetBestsellersResponse })

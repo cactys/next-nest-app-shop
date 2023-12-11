@@ -29,7 +29,7 @@ const partsManufacturers = [
 module.exports = {
   async up(queryInterface, Sequelize) {
     return queryInterface.bulkInsert(
-      'ProductParts',
+      'product-parts',
       [...Array(100)].map(() => ({
         product_manufacturer:
           productManufacturers[
@@ -63,6 +63,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    return queryInterface.bulkDelete('ProductParts', null, {});
+    return queryInterface.bulkDelete('product-parts', null, {});
   },
 };

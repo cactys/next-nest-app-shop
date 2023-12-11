@@ -7,6 +7,7 @@ import { User } from './users/users.model';
 import { AuthModule } from './auth/auth.module';
 import { ProductPartsModule } from './product-parts/product-parts.module';
 import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   controllers: [],
@@ -30,6 +31,7 @@ import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
     AuthModule,
     ProductPartsModule,
     ShoppingCartModule,
+    PaymentModule,
   ],
 })
 export class AppModule {}
