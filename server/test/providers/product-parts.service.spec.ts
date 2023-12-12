@@ -64,9 +64,7 @@ describe('Product Parts Service', () => {
   });
 
   it('should find by name', async () => {
-    const part = await productPartsService.findOneByName(
-      'Sufficio asperiores.',
-    );
+    const part = await productPartsService.findOneByName('Capto usque.');
 
     expect(part.dataValues).toEqual(
       expect.objectContaining({
@@ -75,7 +73,7 @@ describe('Product Parts Service', () => {
         product_manufacturer: expect.any(String),
         part_manufacturer: expect.any(String),
         vendor_code: expect.any(String),
-        name: 'Sufficio asperiores.',
+        name: 'Capto usque.',
         description: expect.any(String),
         images: expect.any(String),
         in_stock: expect.any(Number),
