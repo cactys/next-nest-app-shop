@@ -21,7 +21,7 @@ const mockedUser = {
   password: 'ivan123',
 };
 
-describe('Product Parts Controller', () => {
+describe('Shopping Cart Controller', () => {
   let app: INestApplication;
   let productPartsService: ProductPartsService;
   let usersService: UsersService;
