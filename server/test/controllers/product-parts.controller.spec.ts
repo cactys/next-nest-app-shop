@@ -205,7 +205,7 @@ describe('Product Parts Controller', () => {
   });
 
   it('should get by name', async () => {
-    const body = { name: 'Venio brevis.' };
+    const body = { name: 'Cogo articulus.' };
     const login = await request(app.getHttpServer())
       .post('/users/login')
       .send({ username: mockedUser.username, password: mockedUser.password });
@@ -222,7 +222,7 @@ describe('Product Parts Controller', () => {
         product_manufacturer: expect.any(String),
         part_manufacturer: expect.any(String),
         vendor_code: expect.any(String),
-        name: 'Venio brevis.',
+        name: 'Cogo articulus.',
         description: expect.any(String),
         images: expect.any(String),
         in_stock: expect.any(Number),

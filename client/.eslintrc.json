@@ -1,6 +1,17 @@
 {
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
   "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
   "plugins": [
+    "react",
+    "@typescript-eslint",
     "@typescript-eslint/eslint-plugin"
   ],
   "extends": [
@@ -82,10 +93,6 @@
       "as-needed"
     ],
     "padded-blocks": [
-      "error",
-      "never"
-    ],
-    "semi": [
       "error",
       "never"
     ],
