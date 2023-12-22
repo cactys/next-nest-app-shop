@@ -36,7 +36,7 @@ body::-webkit-scrollbar-thumb:hover {
 
 .container {
   max-width: 1466px;
-  padding: 0 14px;
+  padding: 0 15px;
   margin: 0 auto;
 }
 
@@ -50,7 +50,7 @@ a {
   font-family: Raleway;
   font-style: normal;
   font-weight: 700;
-  src: url(../public/fonts/Raleway-Bold.woff) format('woff');
+  src: url(/fonts/Raleway-Bold.woff) format('woff');
 }
 
 @font-face {
@@ -58,23 +58,23 @@ a {
   font-family: Raleway;
   font-style: normal;
   font-weight: 500;
-  src: url(../public/fonts/Raleway-Medium.woff) format('woff');
+  src: url(/fonts/Raleway-Medium.woff) format('woff');
 }
 
 @font-face {
   font-display: swap;
-  font-family: Raleway;
+  font-family: Roboto;
   font-style: normal;
   font-weight: 500;
-  src: url(../public/fonts/Roboto-Medium.woff) format('woff');
+  src: url(/fonts/Roboto-Medium.woff) format('woff');
 }
 
 @font-face {
   font-display: swap;
-  font-family: Raleway;
+  font-family: Roboto;
   font-style: normal;
   font-weight: 400;
-  src: url(../public/fonts/Roboto-Regular.woff) format('woff');
+  src: url(/fonts/Roboto-Regular.woff) format('woff');
 }
 
 .overlay {
@@ -98,7 +98,7 @@ a {
 .overlay.open-search {
   visibility: visible;
   opacity: 1;
-  z-index: 10;
+  z-index: 12;
 }
 
 .slick-slide {
@@ -162,9 +162,10 @@ a {
   animation-delay: 400ms;
 }
 
-.flex-container .text-center button {
+.flex-container .text-center,
+button {
   border: 1px solid white;
-  background-color: transparent;
+  background: transparent;
   outline: none;
   padding: 10px 20px;
   font-size: 1.1rem;
