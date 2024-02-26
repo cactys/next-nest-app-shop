@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { MultiValue, SingleValue } from 'react-select';
 
 export interface IWrappedComponentProps {
@@ -14,3 +15,14 @@ export type TSelectOptionType =
   | MultiValue<IOption>
   | SingleValue<IOption>
   | null;
+
+export interface IAccordion {
+  children: ReactNode;
+  title?: string;
+  titleClass: string;
+  arrowOpenClass: string;
+}
+
+export interface ILayoutProps {
+  children: ReactNode;
+}

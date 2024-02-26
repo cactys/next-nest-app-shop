@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import useRedirectByUserCheck from '@/hooks/useRedirectByUserCheck';
-import Header from '@/components/modules/Headers/Header';
+import Layout from '@/components/layout/Layout';
 
 const Dashboard = () => {
   const { shouldLoadContent } = useRedirectByUserCheck(true);
@@ -14,8 +14,12 @@ const Dashboard = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" type="image/svg" sizes="32x32" href="/img/logo.svg" />
       </Head>
-      <Header />
-      <h1>Dashboard</h1>
+      <Layout>
+        <main>
+          <h1>Dashboard</h1>
+          <div className="overlay" />
+        </main>
+      </Layout>
     </>
   );
 };
