@@ -15,5 +15,4 @@ const FooterLogo = () => (
     </Link>
   </div>
 );
-
 export default FooterLogo;

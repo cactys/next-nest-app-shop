@@ -13,6 +13,7 @@ const useRedirectByUserCheck = (isAuthPage = false) => {
       shouldCheckAuth.current = false;
       checkUser();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const checkUser = async () => {
