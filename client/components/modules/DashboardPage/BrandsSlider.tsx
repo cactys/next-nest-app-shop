@@ -12,6 +12,8 @@ import Arderia from '@/public/img/brand-1.png';
 import BaltGaz from '@/public/img/brand-2.png';
 import Buberus from '@/public/img/brand-3.png';
 import Bosch from '@/public/img/brand-4.png';
+import BrandsSliderNextArrow from '@/components/elements/BrandsSliderNextArrow/BrandsSliderNextArrow';
+import BrandsSliderPrevArrow from '@/components/elements/BrandsSliderPrevArrow/BrandsSliderPrevArrow';
 
 const BrandsSlider = () => {
   const isMedia768 = useMediaQuery(768);
@@ -44,27 +46,24 @@ const BrandsSlider = () => {
   }, [isMedia768]);
 
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     slidesToScroll: 1,
     variableWidth: true,
     autoplay: true,
     speed: 500,
+    nextArrow: <BrandsSliderNextArrow modeClass={darkModeClass} />,
+    prevArrow: <BrandsSliderPrevArrow modeClass={darkModeClass} />,
   };
 
   return (
     <Slider {...settings} className={styles.dashboard__brands__slider}>
       {brandItems.map((item) => (
         <div
-          className={`${styles.dashboard__brads__slide} ${darkModeClass}`}
+          className={`${styles.dashboard__brands__slide} ${darkModeClass}`}
           key={item.id}
           style={{ width: isMedia768 ? 124 : 180 }}>
-          <Image
-            src={item.img}
-            alt={item.alt}
-            priority={false}
-            style={{ width: 'auto', height: 'auto' }}
-          />
+          <Image src={item.img} alt={item.alt} priority={false} />
         </div>
       ))}
     </Slider>
