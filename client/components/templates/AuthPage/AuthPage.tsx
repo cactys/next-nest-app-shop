@@ -85,7 +85,7 @@ const AuthPage = () => {
           <button
             onClick={switchForm}
             className={`${styles.switch__button} ${styles.button} ${styles.switch__btn} ${darkModeClass}`}>
-            Регистрация
+            Войти
           </button>
         </div>
         <div
@@ -107,7 +107,7 @@ const AuthPage = () => {
           <button
             onClick={switchForm}
             className={`${styles.switch__button} ${styles.button} ${styles.switch__btn} ${darkModeClass}`}>
-            Войти
+            Регистрация
           </button>
         </div>
       </div>

@@ -4,27 +4,31 @@ import styles from '@/styles/footer/index.module.scss';
 const CompanyContent = () => (
   <ul className={styles.footer__top__item__list}>
     <li className={styles.footer__top__item__list__item}>
-      <Link href="/about" passHref legacyBehavior>
-        <a className={styles.footer__top__item__list__item__link}>О компании</a>
+      <Link
+        href="/about"
+        className={styles.footer__top__item__list__item__link}>
+        О компании
       </Link>
     </li>
     <li className={styles.footer__top__item__list__item}>
-      <Link href="/contacts" passHref legacyBehavior>
-        <a className={styles.footer__top__item__list__item__link}>
-          Обратная связь
-        </a>
+      <Link
+        href="/contacts"
+        className={styles.footer__top__item__list__item__link}>
+        Обратная связь
       </Link>
     </li>
     <li className={styles.footer__top__item__list__item}>
-      <Link href="/wholesale-buyers" passHref legacyBehavior>
-        <a className={styles.footer__top__item__list__item__link}>
-          Оптовым покупателям
-        </a>
+      <Link
+        href="/wholesale-buyers"
+        className={styles.footer__top__item__list__item__link}>
+        Оптовым покупателям
       </Link>
     </li>
     <li className={styles.footer__top__item__list__item}>
-      <Link href="/contacts" passHref legacyBehavior>
-        <a className={styles.footer__top__item__list__item__link}>Контакты</a>
+      <Link
+        href="/contacts"
+        className={styles.footer__top__item__list__item__link}>
+        Контакты
       </Link>
     </li>
   </ul>

@@ -8,8 +8,14 @@ import 'slick-carousel/slick/slick-theme.css';
 import { IDashboardSlider } from '@/types/dashboard';
 import styles from '@/styles/dashboard/index.module.scss';
 import skeletonStyles from '@/styles/dashboard/index.module.scss';
+import Image from 'next/image';
+import Link from 'next/link';
 
-const DashboardSlider = ({ product, spinner }: IDashboardSlider) => {
+const DashboardSlider = ({
+  product,
+  spinner,
+  goToPartPage,
+}: IDashboardSlider) => {
   const isMedia560 = useMediaQuery(560);
   const isMedia768 = useMediaQuery(768);
   const isMedia800 = useMediaQuery(800);
@@ -46,18 +52,35 @@ const DashboardSlider = ({ product, spinner }: IDashboardSlider) => {
 
   return (
     <Slider {...settings} className={styles.dashboard__brands__slider}>
-      {spinner
-        ? [...Array(8)].map((item) => (
-            <div
-              className={`${skeletonStyles.skeleton__item} ${
-                mode === 'dark' ? `${skeletonStyles.dark_mode}` : ''
-              }`}
-              key={item}
-              style={width}>
-              <div className={skeletonStyles.skeleton__item__light} />
+      {spinner ? (
+        [...Array(8)].map((item) => (
+          <div
+            className={`${skeletonStyles.skeleton__item} ${
+              mode === 'dark' ? `${skeletonStyles.dark_mode}` : ''
+            }`}
+            key={item}
+            style={width}>
+            <div className={skeletonStyles.skeleton__item__light} />
+          </div>
+        ))
+      ) : product.length ? (
+        product.map((item) => (
+          <div
+            className={`${styles.dashboard__slide} ${darkModeClass}`}
+            key={item.id}
+            style={width}>
+            <Image src={JSON.parse(item.images)} alt={item.name} />
+            <div className={styles.dashboard__slide__inner}>
+              <Link href={goToPartPage ? `/catalog/${item.id}` : '/catalog'}>
+                <h3 className={styles.dashboard__slide__title}>{item.name}</h3>
+              </Link>
+              <span className={styles.dashboard__slide}>2</span>
             </div>
-          ))
-        : product.length ? (product.map((item) => ())) : (<span>Список товаров пуст...</span>)}
+          </div>
+        ))
+      ) : (
+        <span>Список товаров пуст...</span>
+      )}
     </Slider>
   );
 };

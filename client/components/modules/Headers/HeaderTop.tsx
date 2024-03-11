@@ -35,48 +35,51 @@ const HeaderTop = () => {
           } ${darkModeClass}`}>
           <ul className={styles.header__nav__list}>
             <li className={styles.header__nav__list__item}>
-              <Link href="/shipping-payment" passHref legacyBehavior>
-                <a
-                  className={`${styles.header__nav__list__item__link} ${darkModeClass}`}
-                  onClick={closePopup}>
-                  Доставка и оплата
-                </a>
+              <Link
+                href="/shipping-payment"
+                className={`${styles.header__nav__list__item__link} ${darkModeClass}`}
+                onClick={closePopup}>
+                Доставка и оплата
               </Link>
             </li>
             <li className={styles.header__nav__list__item}>
-              <Link href="/about" passHref legacyBehavior>
-                <a
-                  className={`${styles.header__nav__list__item__link} ${darkModeClass}`}
-                  onClick={closePopup}>
-                  О компании
-                </a>
+              <Link
+                href="/about"
+                passHref
+                legacyBehavior
+                className={`${styles.header__nav__list__item__link} ${darkModeClass}`}
+                onClick={closePopup}>
+                О компании
               </Link>
             </li>
             <li className={styles.header__nav__list__item}>
-              <Link href="/catalog" passHref legacyBehavior>
-                <a
-                  className={`${styles.header__nav__list__item__link} ${darkModeClass}`}
-                  onClick={closePopup}>
-                  Каталог
-                </a>
+              <Link
+                href="/catalog"
+                passHref
+                legacyBehavior
+                className={`${styles.header__nav__list__item__link} ${darkModeClass}`}
+                onClick={closePopup}>
+                Каталог
               </Link>
             </li>
             <li className={styles.header__nav__list__item}>
-              <Link href="/contacts" passHref legacyBehavior>
-                <a
-                  className={`${styles.header__nav__list__item__link} ${darkModeClass}`}
-                  onClick={closePopup}>
-                  Контакты
-                </a>
+              <Link
+                href="/contacts"
+                passHref
+                legacyBehavior
+                className={`${styles.header__nav__list__item__link} ${darkModeClass}`}
+                onClick={closePopup}>
+                Контакты
               </Link>
             </li>
             <li className={styles.header__nav__list__item}>
-              <Link href="/wholesale-buyers" passHref legacyBehavior>
-                <a
-                  className={`${styles.header__nav__list__item__link} ${darkModeClass}`}
-                  onClick={closePopup}>
-                  Оптовым покупателям
-                </a>
+              <Link
+                href="/wholesale-buyers"
+                passHref
+                legacyBehavior
+                className={`${styles.header__nav__list__item__link} ${darkModeClass}`}
+                onClick={closePopup}>
+                Оптовым покупателям
               </Link>
             </li>
             {isMedia950 && (

@@ -18,14 +18,12 @@ const HeaderBottom = () => {
     <div className={styles.header__bottom}>
       <div className={`container ${styles.header__bottom__container}`}>
         <h1 className={styles.header__logo}>
-          <Link href="/dashboard" passHref legacyBehavior>
-            <a className={styles.header__logo__link}>
-              <img src="/img/logo.svg" alt="logo" />
-              <span
-                className={`${styles.header__logo__link__text} ${darkModeClass}`}>
-                Магазин всякого
-              </span>
-            </a>
+          <Link href="/dashboard" className={styles.header__logo__link}>
+            <img src="/img/logo.svg" alt="logo" />
+            <span
+              className={`${styles.header__logo__link__text} ${darkModeClass}`}>
+              Магазин всякого
+            </span>
           </Link>
         </h1>
         <div className={styles.header__search}>

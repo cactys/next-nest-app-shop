@@ -69,18 +69,18 @@ const Footer = () => {
             <ul
               className={`${styles.footer__top__item__list} ${styles.footer__top__item__contacts}`}>
               <li className={styles.footer__top__item__list__item}>
-                <Link href="/contacts" passHref legacyBehavior>
-                  <a className={styles.footer__top__item__list__item__link}>
-                    <span>Наш адрес:</span>
-                    <span>г. Москва, ул. ... д...</span>
-                    <span>
-                      <MarkerSvg />
-                    </span>
-                  </a>
+                <Link
+                  href="/contacts"
+                  className={styles.footer__top__item__list__item__link}>
+                  <span>Наш адрес:</span>
+                  <span>г. Москва, ул. ... д...</span>
+                  <span>
+                    <MarkerSvg />
+                  </span>
                 </Link>
               </li>
               <li className={styles.footer__top__item__list__item}>
-                <a
+                <Link
                   href="tel:+780955555555"
                   className={styles.footer__top__item__list__item__link}>
                   <span>Наш контактный телефон:</span>
@@ -88,10 +88,10 @@ const Footer = () => {
                   <span>
                     <PhoneSvg />
                   </span>
-                </a>
+                </Link>
               </li>
               <li className={styles.footer__top__item__list__item}>
-                <a
+                <Link
                   href="mailto:info@zapchasti.com.ru"
                   className={styles.footer__top__item__list__item__link}>
                   <span>E-mail:</span>
@@ -99,7 +99,7 @@ const Footer = () => {
                   <span>
                     <MailSvg />
                   </span>
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -131,32 +131,32 @@ const Footer = () => {
               </h3>
               <ul className={styles.footer__bottom__block__social}>
                 <li className={styles.footer__bottom__block__social__item}>
-                  <a
+                  <Link
                     href="#"
                     className={styles.footer__bottom__block__social__item_link}>
                     <VkSvg />
-                  </a>
+                  </Link>
                 </li>
                 <li className={styles.footer__bottom__block__social__item}>
-                  <a
+                  <Link
                     href="#"
                     className={styles.footer__bottom__block__social__item_link}>
                     <FacebookSvg />
-                  </a>
+                  </Link>
                 </li>
                 <li className={styles.footer__bottom__block__social__item}>
-                  <a
+                  <Link
                     href="#"
                     className={styles.footer__bottom__block__social__item_link}>
                     <InstagramSvg />
-                  </a>
+                  </Link>
                 </li>
                 <li className={styles.footer__bottom__block__social__item}>
-                  <a
+                  <Link
                     href="#"
                     className={styles.footer__bottom__block__social__item_link}>
                     <YoutubeSvg />
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
