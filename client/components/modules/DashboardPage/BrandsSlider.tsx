@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Slider from 'react-slick';
 import Image from 'next/image';
 import { useEffect } from 'react';
@@ -63,7 +64,7 @@ const BrandsSlider = () => {
           className={`${styles.dashboard__brands__slide} ${darkModeClass}`}
           key={item.id}
           style={{ width: isMedia768 ? 124 : 180 }}>
-          <Image src={item.img} alt={item.alt} priority={false} />
+          <img src={`${item.img}`} alt={item.alt} />
         </div>
       ))}
     </Slider>

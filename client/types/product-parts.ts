@@ -13,3 +13,8 @@ export interface IProductPart {
   popularity: number;
   compatibility: string;
 }
+
+export interface IProductParts {
+  count: number;
+  rows: IProductPart[];
+}

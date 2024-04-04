@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Slider from 'react-slick';
 import { useEffect } from 'react';
 import { useUnit } from 'effector-react';
@@ -8,11 +9,11 @@ import 'slick-carousel/slick/slick-theme.css';
 import { IDashboardSlider } from '@/types/dashboard';
 import styles from '@/styles/dashboard/index.module.scss';
 import skeletonStyles from '@/styles/dashboard/index.module.scss';
-import Image from 'next/image';
 import Link from 'next/link';
+import { formatPrice } from '@/utils/common';
 
 const DashboardSlider = ({
-  product,
+  items,
   spinner,
   goToPartPage,
 }: IDashboardSlider) => {
@@ -41,8 +42,7 @@ const DashboardSlider = ({
     autoplay: true,
     speed: 500,
     arrows: false,
-    slidesToShow:
-      product.length >= 4 ? (isMedia1030 ? 3 : 4) : product.length - 1,
+    slidesToShow: items.length >= 4 ? (isMedia1030 ? 3 : 4) : items.length - 1,
     slidesToScroll: isMedia768 ? 1 : 2,
   };
 
@@ -63,18 +63,29 @@ const DashboardSlider = ({
             <div className={skeletonStyles.skeleton__item__light} />
           </div>
         ))
-      ) : product.length ? (
-        product.map((item) => (
+      ) : items.length ? (
+        items.map((item) => (
           <div
             className={`${styles.dashboard__slide} ${darkModeClass}`}
             key={item.id}
             style={width}>
-            <Image src={JSON.parse(item.images)} alt={item.name} />
+            <img src={JSON.parse(item.images)[0]} alt={item.name} />
             <div className={styles.dashboard__slide__inner}>
-              <Link href={goToPartPage ? `/catalog/${item.id}` : '/catalog'}>
-                <h3 className={styles.dashboard__slide__title}>{item.name}</h3>
+              <Link
+                href={goToPartPage ? `/catalog/${item.id}` : '/catalog'}
+                legacyBehavior>
+                <a>
+                  <h3 className={styles.dashboard__slide__title}>
+                    {item.name}
+                  </h3>
+                </a>
               </Link>
-              <span className={styles.dashboard__slide}>2</span>
+              <span className={styles.dashboard__slide__code}>
+                Артикул: {item.vendor_code}
+              </span>
+              <span className={styles.dashboard__slide__price}>
+                {formatPrice(item.price)} ₽
+              </span>
             </div>
           </div>
         ))
