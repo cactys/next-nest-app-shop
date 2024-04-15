@@ -65,7 +65,7 @@ const CartPopup = forwardRef<HTMLDivElement, IWrappedComponentProps>(
                   <button
                     className={`${styles.cart__popup__footer__btn} ${darkModeClass}`}
                     disabled={!shoppingCart.length}>
-                    Оформить заказ
+                    <a>Оформить заказ</a>
                   </button>
                 </Link>
               </div>

@@ -69,36 +69,36 @@ const Footer = () => {
             <ul
               className={`${styles.footer__top__item__list} ${styles.footer__top__item__contacts}`}>
               <li className={styles.footer__top__item__list__item}>
-                <Link
-                  href="/contacts"
-                  className={styles.footer__top__item__list__item__link}>
-                  <span>Наш адрес:</span>
-                  <span>г. Москва, ул. ... д...</span>
-                  <span>
-                    <MarkerSvg />
-                  </span>
+                <Link href="/contacts" legacyBehavior>
+                  <a className={styles.footer__top__item__list__item__link}>
+                    <span>Наш адрес:</span>
+                    <span>г. Москва, ул. ... д...</span>
+                    <span>
+                      <MarkerSvg />
+                    </span>
+                  </a>
                 </Link>
               </li>
               <li className={styles.footer__top__item__list__item}>
-                <Link
-                  href="tel:+780955555555"
-                  className={styles.footer__top__item__list__item__link}>
-                  <span>Наш контактный телефон:</span>
-                  <span>+7(8095) 555-55-55</span>
-                  <span>
-                    <PhoneSvg />
-                  </span>
+                <Link href="tel:+780955555555" legacyBehavior>
+                  <a className={styles.footer__top__item__list__item__link}>
+                    <span>Наш контактный телефон:</span>
+                    <span>+7(8095) 555-55-55</span>
+                    <span>
+                      <PhoneSvg />
+                    </span>
+                  </a>
                 </Link>
               </li>
               <li className={styles.footer__top__item__list__item}>
-                <Link
-                  href="mailto:info@zapchasti.com.ru"
-                  className={styles.footer__top__item__list__item__link}>
-                  <span>E-mail:</span>
-                  <span>info@zapchasti.com.ru</span>
-                  <span>
-                    <MailSvg />
-                  </span>
+                <Link href="mailto:info@zapchasti.com.ru" legacyBehavior>
+                  <a className={styles.footer__top__item__list__item__link}>
+                    <span>E-mail:</span>
+                    <span>info@zapchasti.com.ru</span>
+                    <span>
+                      <MailSvg />
+                    </span>
+                  </a>
                 </Link>
               </li>
             </ul>
@@ -131,31 +131,43 @@ const Footer = () => {
               </h3>
               <ul className={styles.footer__bottom__block__social}>
                 <li className={styles.footer__bottom__block__social__item}>
-                  <Link
-                    href="#"
-                    className={styles.footer__bottom__block__social__item_link}>
-                    <VkSvg />
+                  <Link href="#" legacyBehavior>
+                    <a
+                      className={
+                        styles.footer__bottom__block__social__item_link
+                      }>
+                      <VkSvg />
+                    </a>
                   </Link>
                 </li>
                 <li className={styles.footer__bottom__block__social__item}>
-                  <Link
-                    href="#"
-                    className={styles.footer__bottom__block__social__item_link}>
-                    <FacebookSvg />
+                  <Link href="#" legacyBehavior>
+                    <a
+                      className={
+                        styles.footer__bottom__block__social__item_link
+                      }>
+                      <FacebookSvg />
+                    </a>
                   </Link>
                 </li>
                 <li className={styles.footer__bottom__block__social__item}>
-                  <Link
-                    href="#"
-                    className={styles.footer__bottom__block__social__item_link}>
-                    <InstagramSvg />
+                  <Link href="#" legacyBehavior>
+                    <a
+                      className={
+                        styles.footer__bottom__block__social__item_link
+                      }>
+                      <InstagramSvg />
+                    </a>
                   </Link>
                 </li>
                 <li className={styles.footer__bottom__block__social__item}>
-                  <Link
-                    href="#"
-                    className={styles.footer__bottom__block__social__item_link}>
-                    <YoutubeSvg />
+                  <Link href="#" legacyBehavior>
+                    <a
+                      className={
+                        styles.footer__bottom__block__social__item_link
+                      }>
+                      <YoutubeSvg />
+                    </a>
                   </Link>
                 </li>
               </ul>
