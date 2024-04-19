@@ -54,6 +54,26 @@ const DashboardPage = () => {
           </h3>
           <DashboardSlider items={bestsellers.rows || []} spinner={spinner} />
         </div>
+        <div className={styles.dashboard__parts}>
+          <h3 className={`${styles.dashboard__parts__title} ${darkModeClass}`}>
+            Новинки
+          </h3>
+          <DashboardSlider items={newParts.rows || []} spinner={spinner} />
+        </div>
+        <div className={styles.dashboard__parts}>
+          <h3
+            className={`${styles.dashboard__parts__title} ${styles.dashboard__about__title} ${darkModeClass}`}>
+            О компании
+          </h3>
+          <p className={`${styles.dashboard__about__text} ${darkModeClass}`}>
+            Инструкции и схемы помогут разобраться в эксплуатации, определить
+            неисправность и правильно выбрать запчасть для ремонта Вашего
+            газового оборудования. Купить запчасть, деталь для ремонта газового
+            котла возможно в любом населенном пункте Российской Федерации:
+            Осуществляем доставку запчасти к газовым котлам в следующие города:
+            Москва, Сан
+          </p>
+        </div>
       </div>
     </section>
   );

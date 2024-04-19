@@ -8,7 +8,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { IDashboardSlider } from '@/types/dashboard';
 import styles from '@/styles/dashboard/index.module.scss';
-import skeletonStyles from '@/styles/dashboard/index.module.scss';
+import skeletonStyles from '@/styles/skeleton/index.module.scss';
 import Link from 'next/link';
 import { formatPrice } from '@/utils/common';
 
@@ -20,20 +20,21 @@ const DashboardSlider = ({
   const isMedia560 = useMediaQuery(560);
   const isMedia768 = useMediaQuery(768);
   const isMedia800 = useMediaQuery(800);
-  const isMedia1030 = useMediaQuery(1030);
   const isMedia1366 = useMediaQuery(1366);
   const mode = useUnit($mode);
   const darkModeClass = mode === 'dark' ? `${styles.dark_mode}` : '';
 
   useEffect(() => {
-    const slider = document.querySelector(
-      `.${styles.dashboard__brands__slider}`
-    );
+    const slider = document.querySelectorAll(`.${styles.dashboard__slider}`);
 
-    const list = slider?.querySelector('.slick-list') as HTMLElement;
+    slider.forEach((item) => {
+      const list = item.querySelector('.slick-list') as HTMLElement;
 
-    list.style.height = isMedia768 ? '48px' : '68px';
-  }, [isMedia768]);
+      list.style.height = isMedia560 ? '276px' : '390px';
+      list.style.padding = '0 5px';
+      list.style.marginRight = isMedia560 ? '-8px' : isMedia800 ? '-15px' : '0';
+    });
+  }, [isMedia560, isMedia800]);
 
   const settings = {
     dots: false,
@@ -42,7 +43,7 @@ const DashboardSlider = ({
     autoplay: true,
     speed: 500,
     arrows: false,
-    slidesToShow: items.length >= 4 ? (isMedia1030 ? 3 : 4) : items.length - 1,
+    slidesToShow: items.length >= 4 ? (isMedia768 ? 3 : 4) : items.length - 1,
     slidesToScroll: isMedia768 ? 1 : 2,
   };
 
@@ -51,7 +52,7 @@ const DashboardSlider = ({
   };
 
   return (
-    <Slider {...settings} className={styles.dashboard__brands__slider}>
+    <Slider {...settings} className={styles.dashboard__slider}>
       {spinner ? (
         [...Array(8)].map((_, item) => (
           <div
