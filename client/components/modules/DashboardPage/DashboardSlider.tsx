@@ -43,7 +43,6 @@ const DashboardSlider = ({
     autoplay: true,
     speed: 500,
     arrows: false,
-    slidesToShow: items.length >= 4 ? (isMedia768 ? 3 : 4) : items.length - 1,
     slidesToScroll: isMedia768 ? 1 : 2,
   };
 

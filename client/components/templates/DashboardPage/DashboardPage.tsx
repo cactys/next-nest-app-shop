@@ -1,22 +1,27 @@
 import { getBestsellersOrNewPartsFx } from '@/app/api/productParts';
 import BrandsSlider from '@/components/modules/DashboardPage/BrandsSlider';
+import CartAlert from '@/components/modules/DashboardPage/CartAlert';
 import DashboardSlider from '@/components/modules/DashboardPage/DashboardSlider';
 import { $mode } from '@/context/mode';
+import { $shoppingCart } from '@/context/shopping-cart';
 import styles from '@/styles/dashboard/index.module.scss';
 import { IProductParts } from '@/types/product-parts';
 import { useUnit } from 'effector-react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 const DashboardPage = () => {
+  const mode = useUnit($mode);
+  const shoppingCart = useUnit($shoppingCart);
+  const darkModeClass = mode === 'dark' ? `${styles.dark_mode}` : '';
+
   const [newParts, setNewParts] = useState<IProductParts>({} as IProductParts);
   const [bestsellers, setBestsellers] = useState<IProductParts>(
     {} as IProductParts
   );
   const [spinner, setSpinner] = useState(false);
-
-  const mode = useUnit($mode);
-  const darkModeClass = mode === 'dark' ? `${styles.dark_mode}` : '';
+  const [showAlert, setShowAlert] = useState(!!shoppingCart.length);
 
   useEffect(() => {
     loadProductParts();
@@ -39,9 +44,22 @@ const DashboardPage = () => {
     }
   };
 
+  const closeAlert = () => setShowAlert(false);
+
   return (
     <section className={styles.dashboard}>
       <div className={`container ${styles.dashboard__container}`}>
+        <AnimatePresence>
+          {showAlert && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className={`${styles.dashboard__alert} ${darkModeClass}`}>
+              <CartAlert count={shoppingCart.length} closeAlert={closeAlert} />
+            </motion.div>
+          )}
+        </AnimatePresence>
         <div className={styles.dashboard__brands}>
           <BrandsSlider />
         </div>
