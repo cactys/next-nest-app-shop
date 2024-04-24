@@ -12,7 +12,7 @@ const FilterSelect = () => {
   const handleSearchOptionChange = (selectedOption: TSelectOptionType) => {
     setCategoryOption(selectedOption);
   };
-  https://youtu.be/qK1ENlEucpc?t=31509
+
   return (
     <Select
       placeholder="Я ищу..."
