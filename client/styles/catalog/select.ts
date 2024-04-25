@@ -1,10 +1,5 @@
 import { IOption } from '@/types/common';
-import {
-  CSSObjectWithLabel,
-  GroupBase,
-  OptionProps,
-  StylesConfig,
-} from 'react-select';
+import { CSSObjectWithLabel, GroupBase, StylesConfig } from 'react-select';
 
 export const controlStyles = (
   defaultStyles: CSSObjectWithLabel,
@@ -31,7 +26,7 @@ export const controlStyles = (
     width: '177px',
   },
 });
-https://youtu.be/qK1ENlEucpc?t=27995
+
 export const menuStyles = (
   defaultStyles: CSSObjectWithLabel,
   theme: string
@@ -42,100 +37,23 @@ export const menuStyles = (
   height: 'auto',
   overflow: 'hidden',
   backgroundColor: theme === 'dark' ? '#2d2d2d' : '#f2f2f2',
-  width: 'calc(100% + 40px)',
-  minHeight: 30,
 });
 
-export const optionStyles = (
-  defaultStyles: CSSObjectWithLabel,
-  state: OptionProps<IOption, boolean, GroupBase<IOption>>,
-  theme: string
-) => {
-  const backgroundHoverFromLightMode = state.isSelected
-    ? state.isSelected
-      ? '#9e9e9e'
-      : '#f2f2f2'
-    : state.isSelected
-      ? '#f2f2f2'
-      : '#9e9e9e';
-
-  const backgroundHoverFromDarkMode = state.isSelected
-    ? state.isSelected
-      ? '#f2f2f2'
-      : '#9e9e9e'
-    : state.isSelected
-      ? '#9e9e9e'
-      : '#f2f2f2';
-
-  const colorHoverFromLightMode = state.isSelected
-    ? state.isSelected
-      ? '#f2f2f2'
-      : '#9e9e9e'
-    : state.isSelected
-      ? '#9e9e9e'
-      : '#f2f2f2';
-
-  const colorHoverFromDarkMode = state.isSelected
-    ? state.isSelected
-      ? '#9e9e9e'
-      : '#f2f2f2'
-    : state.isSelected
-      ? '#f2f2f2'
-      : '#9e9e9e';
-
-  return {
-    ...defaultStyles,
-    cursor: 'pointer',
-    padding: '6px 12px',
-    margin: 0,
-    '&:hover': {
-      backgroundColor:
-        theme === 'dark'
-          ? backgroundHoverFromDarkMode
-          : backgroundHoverFromLightMode,
-      color:
-        theme === 'dark' ? colorHoverFromDarkMode : colorHoverFromLightMode,
-    },
-    backgroundColor:
-      theme === 'dark'
-        ? state.isSelected
-          ? '#f2f2f2'
-          : '#2d2d2d'
-        : state.isSelected
-          ? '#2d2d2d'
-          : '#f2f2f2',
-    color:
-      theme === 'dark'
-        ? state.isSelected
-          ? '#222'
-          : '#f2f2f2'
-        : state.isSelected
-          ? '#f2f2f2'
-          : '#222',
-  };
-};
-
-export const inputStyles: StylesConfig<IOption, boolean, GroupBase<IOption>> = {
+export const selectStyles: StylesConfig<
+  IOption,
+  boolean,
+  GroupBase<IOption>
+> = {
   indicatorSeparator: () => ({ border: 'none' }),
-  dropdownIndicator: () => ({ display: 'none' }),
+  dropdownIndicator: (defaultStyles, state) => ({
+    ...defaultStyles,
+    transform: state.selectProps.menuIsOpen ? 'rotate(180deg)' : '',
+    color: '#1c629e',
+  }),
   menuList: (defaultStyles) => ({
     ...defaultStyles,
     paddingTop: 0,
     paddingBottom: 0,
-    minHeight: 30,
-    '&::-webkit-scrollbar': {
-      width: '8px',
-    },
-    '&::-webkit-scrollbar-track': {
-      background: 'transparent',
-    },
-    '&::-webkit-scrollbar-thumb': {
-      background: '#454545',
-      borderRadius: '3px',
-    },
-    '&::-webkit-scrollbar-thumb:hover': {
-      background: 'gray',
-    },
   }),
   placeholder: (defaultStyles) => ({ ...defaultStyles, color: '#b9babb' }),
 };

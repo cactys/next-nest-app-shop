@@ -3,6 +3,7 @@ import { useUnit } from 'effector-react';
 import styles from '@/styles/catalog/index.module.scss';
 import { AnimatePresence } from 'framer-motion';
 import ManufacturersBlock from '@/components/modules/CatalogPage/ManufacturersBlock';
+import FilterSelect from '@/components/modules/CatalogPage/FilterSelect';
 
 const CatalogPage = () => {
   const mode = useUnit($mode);
@@ -23,9 +24,20 @@ const CatalogPage = () => {
           </AnimatePresence>
           <div className={styles.catalog__top__inner}>
             <button>Сбросить фильтр</button>
+            <FilterSelect />
           </div>
         </div>
-        <div className={`${styles.catalog__bottom} ${darkModeClass}`}></div>
+        <div className={`${styles.catalog__bottom} ${darkModeClass}`}>
+          <div className={styles.catalog__bottom__inner}>
+            <div className="div">Filter</div>
+            <ul className={styles.catalog__list}>
+              {[].map((item) => (
+                <li key={item} />
+              ))}
+            </ul>
+            https://youtu.be/qK1ENlEucpc?t=28316
+          </div>
+        </div>
       </div>
     </section>
   );

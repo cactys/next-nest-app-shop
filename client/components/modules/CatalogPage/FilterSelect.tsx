@@ -4,6 +4,13 @@ import { TSelectOptionType } from '@/types/common';
 import { useUnit } from 'effector-react';
 import { useState } from 'react';
 import { createSelectOption } from '@/utils/common';
+import {
+  selectStyles,
+  controlStyles,
+  menuStyles,
+} from '@/styles/catalog/select';
+import { optionStyles } from '@/styles/searchInput';
+import { categoriesOptions } from '@/utils/selectContents';
 
 const FilterSelect = () => {
   const mode = useUnit($mode);
@@ -19,7 +26,7 @@ const FilterSelect = () => {
       value={categoryOption || createSelectOption('Сначала дешевле')}
       onChange={handleSearchOptionChange}
       styles={{
-        ...inputStyles,
+        ...selectStyles,
         control: (defaultStyles) => ({
           ...controlStyles(defaultStyles, mode),
         }),
@@ -34,12 +41,8 @@ const FilterSelect = () => {
           ...optionStyles(defaultStyles, state, mode),
         }),
       }}
-      isClearable={true}
-      openMenuOnClick={false}
-      options={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((item) => ({
-        value: item,
-        label: item,
-      }))}
+      isSearchable={false}
+      options={categoriesOptions}
     />
   );
 };
