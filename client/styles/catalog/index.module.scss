@@ -581,8 +581,8 @@
       padding: 0;
       list-style-type: none;
       display: flex;
+      justify-content: center;
       align-items: center;
-      align-self: center;
 
       @media (max-width: 450px) {
         width: 100%;

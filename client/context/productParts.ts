@@ -15,6 +15,12 @@ export const $productParts = productParts
   .on(setProductPartsCheapFirst, (state) => ({
     ...state,
     rows: state.rows.sort((a, b) => a.price - b.price),
+  }))
+  .on(setProductPartsExpensiveFirst, (state) => ({
+    ...state,
+    rows: state.rows.sort((a, b) => b.price - a.price),
+  }))
+  .on(setProductPartsByPopularity, (state) => ({
+    ...state,
+    rows: state.rows.sort((a, b) => a.popularity - b.popularity),
   }));
-
-// https://youtu.be/qK1ENlEucpc?t=29523
