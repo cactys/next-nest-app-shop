@@ -18,9 +18,11 @@ export type TSelectOptionType =
 
 export interface IAccordion {
   children: ReactNode;
-  title?: string;
+  title: string | false;
   titleClass: string;
   arrowOpenClass: string;
+  isMobileForFilter?: boolean;
+  hideArrowClass?: string;
 }
 
 export interface ILayoutProps {

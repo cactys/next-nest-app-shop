@@ -7,6 +7,8 @@ const Accordion = ({
   title,
   titleClass,
   arrowOpenClass,
+  isMobileForFilter,
+  hideArrowClass,
 }: IAccordion) => {
   const [expanded, setExpanded] = useState(false);
 
@@ -14,12 +16,21 @@ const Accordion = ({
 
   return (
     <>
-      <motion.button
-        initial={false}
-        onClick={toggleAccordion}
-        className={`${titleClass} ${expanded ? arrowOpenClass : ''}`}>
-        {title}
-      </motion.button>
+      {title ? (
+        isMobileForFilter ? (
+          <button className={`${titleClass} ${hideArrowClass}`}>{title}</button>
+        ) : (
+          <motion.button
+            initial={false}
+            onClick={toggleAccordion}
+            className={`${titleClass} ${expanded ? arrowOpenClass : ''}`}>
+            {title}
+          </motion.button>
+        )
+      ) : (
+        ''
+      )}
+      {/* https://youtu.be/qK1ENlEucpc?t=31847 */}
       <AnimatePresence initial={false}>
         {expanded && (
           <motion.div
