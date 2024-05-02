@@ -15,7 +15,7 @@ const CatalogItem = ({ item }: { item: IProductPart }) => {
   const mode = useUnit($mode);
   const shoppingCart = useUnit($shoppingCart);
   const isInCart = shoppingCart.some((cartItem) => cartItem.partId === item.id);
-  const [spinner, setSpeener] = useState(false);
+  const [spinner, setSpinner] = useState(false);
   const darkModeClass = mode === 'dark' ? `${styles.dark_mode}` : '';
 
   return (
