@@ -14,7 +14,6 @@ import ReactPaginate from 'react-paginate';
 import { IQueryParams } from '@/types/catalog';
 import { useRouter } from 'next/router';
 import { IProductParts } from '@/types/product-parts';
-import { idGenerator } from '@/utils/common';
 
 const CatalogPage = ({ query }: { query: IQueryParams }) => {
   const mode = useUnit($mode);
