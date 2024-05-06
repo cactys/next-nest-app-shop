@@ -4,7 +4,12 @@ import styles from '@/styles/catalog/index.module.scss';
 import {
   $partsManufacturer,
   $productManufacturers,
+  setPartsManufacturers,
+  setProductManufacturers,
+  updatePartsManufacturers,
+  updateProductManufacturers,
 } from '@/context/productParts';
+import FilterManufacturerAccordion from './FilterManufacturerAccordion';
 
 const CatalogFiltersDesktop = () => {
   const mode = useUnit($mode);
@@ -18,9 +23,23 @@ const CatalogFiltersDesktop = () => {
         className={`${styles.catalog__bottom__filters__title} ${darkModeClass}`}>
         Фильтры
       </h3>
-      <div className={styles.filters__product_manufacturers}></div>
+      <div className={styles.filters__product_manufacturers}>
+        <FilterManufacturerAccordion
+          manufacturersList={productManufacturers}
+          title="Производитель ..."
+          updateManufacturer={updateProductManufacturers}
+          setManufacturer={setProductManufacturers}
+        />
+      </div>
+      <div className={styles.filters__product_manufacturers}>
+        <FilterManufacturerAccordion
+          manufacturersList={partsManufacturer}
+          title="Производитель запчастей"
+          updateManufacturer={updatePartsManufacturers}
+          setManufacturer={setPartsManufacturers}
+        />
+      </div>
     </div>
-    // https://youtu.be/qK1ENlEucpc?t=31154
   );
 };
 

@@ -2,7 +2,7 @@ import { idGenerator } from './common';
 
 const createManufacturerCheckboxObj = (title: string) => ({
   title,
-  checkbox: false,
+  checked: false,
   id: idGenerator(),
 });
 

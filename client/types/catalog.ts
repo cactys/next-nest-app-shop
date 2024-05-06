@@ -13,15 +13,16 @@ export interface IQueryParams {
   priceTo: string;
 }
 
-export interface IFilterCheckboxFilter {
+export interface IFilterCheckboxItem {
   title: string;
-  checkbox: boolean;
+  checked: boolean;
   id?: string;
+  event: Event<IFilterCheckboxItem>;
 }
 
 export interface IFilterManufacturerAccordionProps {
-  manufacturerList: IFilterCheckboxFilter[];
+  manufacturersList: IFilterCheckboxItem[];
   title: string | false;
-  setManufacturer: Event<IFilterCheckboxFilter[]>;
-  updateManufacturer: Event<IFilterCheckboxFilter>;
+  setManufacturer: Event<IFilterCheckboxItem[]>;
+  updateManufacturer: Event<IFilterCheckboxItem>;
 }

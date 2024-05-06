@@ -23,16 +23,15 @@ const Accordion = ({
           <motion.button
             initial={false}
             onClick={toggleAccordion}
-            className={`${titleClass} ${expanded ? arrowOpenClass : ''}`}>
+            className={`${titleClass} ${expanded ? (isMobileForFilter ? '' : arrowOpenClass) : ''}`}>
             {title}
           </motion.button>
         )
       ) : (
         ''
       )}
-      {/* https://youtu.be/qK1ENlEucpc?t=31847 */}
       <AnimatePresence initial={false}>
-        {expanded && (
+        {(isMobileForFilter || expanded) && (
           <motion.div
             key="content"
             initial="collapsed"

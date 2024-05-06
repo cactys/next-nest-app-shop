@@ -1,4 +1,4 @@
-import { IFilterCheckboxFilter } from '@/types/catalog';
+import { IFilterCheckboxItem } from '@/types/catalog';
 import { IProductParts } from '@/types/product-parts';
 import { partsManufacturers, productManufacturers } from '@/utils/catalog';
 import { createDomain } from 'effector-next';
@@ -11,9 +11,29 @@ export const setProductPartsCheapFirst = productParts.createEvent();
 export const setProductPartsExpensiveFirst = productParts.createEvent();
 export const setProductPartsByPopularity = productParts.createEvent();
 export const setProductManufacturers =
-  productParts.createEvent<IFilterCheckboxFilter[]>();
+  productParts.createEvent<IFilterCheckboxItem[]>();
+export const updateProductManufacturers =
+  productParts.createEvent<IFilterCheckboxItem>();
 export const setPartsManufacturers =
-  productParts.createEvent<IFilterCheckboxFilter[]>();
+  productParts.createEvent<IFilterCheckboxItem[]>();
+export const updatePartsManufacturers =
+  productParts.createEvent<IFilterCheckboxItem>();
+
+const updateManufacturer = (
+  manufacturers: IFilterCheckboxItem[],
+  id: string,
+  payload: Partial<IFilterCheckboxItem>
+) =>
+  manufacturers.map((item) => {
+    if (item.id === id) {
+      return {
+        ...item,
+        ...payload,
+      };
+    }
+
+    return item;
+  });
 
 export const $productParts = productParts
   .createStore<IProductParts>({} as IProductParts)
@@ -32,13 +52,23 @@ export const $productParts = productParts
   }));
 
 export const $productManufacturers = productParts
-  .createStore<
-    IFilterCheckboxFilter[]
-  >(productManufacturers as IFilterCheckboxFilter[])
-  .on(setProductManufacturers, (_, parts) => parts);
+  .createStore<IFilterCheckboxItem[]>(
+    productManufacturers as IFilterCheckboxItem[]
+  )
+  .on(setProductManufacturers, (_, parts) => parts)
+  .on(updateProductManufacturers, (state, payload) => [
+    ...updateManufacturer(state, payload.id as string, {
+      checked: payload.checked,
+    }),
+  ]);
 
 export const $partsManufacturer = productParts
-  .createStore<
-    IFilterCheckboxFilter[]
-  >(partsManufacturers as IFilterCheckboxFilter[])
-  .on(setPartsManufacturers, (_, parts) => parts);
+  .createStore<IFilterCheckboxItem[]>(
+    partsManufacturers as IFilterCheckboxItem[]
+  )
+  .on(setPartsManufacturers, (_, parts) => parts)
+  .on(updatePartsManufacturers, (state, payload) => [
+    ...updateManufacturer(state, payload.id as string, {
+      checked: payload.checked,
+    }),
+  ]);

@@ -14,6 +14,7 @@ import ReactPaginate from 'react-paginate';
 import { IQueryParams } from '@/types/catalog';
 import { useRouter } from 'next/router';
 import { IProductParts } from '@/types/product-parts';
+import CatalogFilters from '@/components/modules/CatalogPage/CatalogFilters';
 
 const CatalogPage = ({ query }: { query: IQueryParams }) => {
   const mode = useUnit($mode);
@@ -145,7 +146,8 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
         </div>
         <div className={`${styles.catalog__bottom} ${darkModeClass}`}>
           <div className={styles.catalog__bottom__inner}>
-            <div className="div">Filter</div>
+            <CatalogFilters />
+            {/* https://youtu.be/qK1ENlEucpc?t=32360 */}
             {spinner ? (
               <ul className={skeletonStyles.skeleton}>
                 {Array.from(new Array(8)).map((_, i) => (
@@ -184,7 +186,6 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
           forcePage={currentPage}
           onPageChange={handlePageChange}
         />
-        {/* https://youtu.be/qK1ENlEucpc?t=31147 */}
       </div>
     </section>
   );
