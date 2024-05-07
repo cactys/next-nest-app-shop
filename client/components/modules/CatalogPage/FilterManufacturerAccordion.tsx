@@ -18,7 +18,7 @@ const FilterManufacturerAccordion = ({
 
   const chooseAllManufacturers = () =>
     setManufacturer(
-      manufacturersList.map((item) => ({ ...item, checkbox: true }))
+      manufacturersList.map((item) => ({ ...item, checked: true }))
     );
 
   return (
@@ -38,6 +38,7 @@ const FilterManufacturerAccordion = ({
           {manufacturersList.map((item) => (
             <FilterCheckboxItem
               title={item.title}
+              id={item.id}
               key={item.id}
               checked={item.checked}
               event={updateManufacturer}
@@ -45,7 +46,7 @@ const FilterManufacturerAccordion = ({
           ))}
         </ul>
         <div style={{ height: 24 }} />
-        {/* https://youtu.be/qK1ENlEucpc?t=33217 */}
+        {/* https://youtu.be/qK1ENlEucpc?t=33373 */}
       </div>
     </Accordion>
   );
