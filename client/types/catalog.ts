@@ -26,3 +26,17 @@ export interface IFilterManufacturerAccordionProps {
   setManufacturer: Event<IFilterCheckboxItem[]>;
   updateManufacturer: Event<IFilterCheckboxItem>;
 }
+
+export interface IPriceRangeProps {
+  priceRange: number[];
+  setPriceRange: (arg: number[]) => void;
+  setIsPriceChanged: (arg: boolean) => void;
+}
+
+export interface ICatalogFiltersProps extends IPriceRangeProps {
+  resetFilterBtnDisabled: boolean;
+}
+
+export interface ICatalogFilterDesktopProps extends ICatalogFiltersProps {
+  spinner: boolean;
+}

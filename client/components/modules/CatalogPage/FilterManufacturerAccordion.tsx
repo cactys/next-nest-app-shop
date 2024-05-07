@@ -45,6 +45,7 @@ const FilterManufacturerAccordion = ({
           ))}
         </ul>
         <div style={{ height: 24 }} />
+        {/* https://youtu.be/qK1ENlEucpc?t=33217 */}
       </div>
     </Accordion>
   );
