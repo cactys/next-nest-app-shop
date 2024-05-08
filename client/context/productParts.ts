@@ -62,7 +62,7 @@ export const $productManufacturers = productParts
     }),
   ]);
 
-export const $partsManufacturer = productParts
+export const $partsManufacturers = productParts
   .createStore<IFilterCheckboxItem[]>(
     partsManufacturers as IFilterCheckboxItem[]
   )

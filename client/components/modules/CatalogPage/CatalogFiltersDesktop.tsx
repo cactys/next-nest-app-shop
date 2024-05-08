@@ -1,7 +1,7 @@
 import { $mode } from '@/context/mode';
 import { useUnit } from 'effector-react';
 import {
-  $partsManufacturer,
+  $partsManufacturers,
   $productManufacturers,
   setPartsManufacturers,
   setProductManufacturers,
@@ -24,7 +24,7 @@ const CatalogFiltersDesktop = ({
 }: ICatalogFilterDesktopProps) => {
   const mode = useUnit($mode);
   const productManufacturers = useUnit($productManufacturers);
-  const partsManufacturer = useUnit($partsManufacturer);
+  const partsManufacturers = useUnit($partsManufacturers);
   const darkModeClass = mode === 'dark' ? `${styles.dark_mode}` : '';
 
   return (
@@ -57,7 +57,7 @@ const CatalogFiltersDesktop = ({
       </div>
       <div className={styles.filters__product_manufacturers}>
         <FilterManufacturerAccordion
-          manufacturersList={partsManufacturer}
+          manufacturersList={partsManufacturers}
           title="Производитель запчастей"
           updateManufacturer={updatePartsManufacturers}
           setManufacturer={setPartsManufacturers}

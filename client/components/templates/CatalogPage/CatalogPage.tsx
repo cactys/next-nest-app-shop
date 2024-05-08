@@ -6,10 +6,12 @@ import ManufacturersBlock from '@/components/modules/CatalogPage/ManufacturersBl
 import FilterSelect from '@/components/modules/CatalogPage/FilterSelect';
 import { getProductPartsFx } from '@/app/api/productParts';
 import {
-  $partsManufacturer,
+  $partsManufacturers,
   $productManufacturers,
   $productParts,
   setProductParts,
+  updatePartsManufacturers,
+  updateProductManufacturers,
 } from '@/context/productParts';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -24,7 +26,7 @@ import CatalogFilters from '@/components/modules/CatalogPage/CatalogFilters';
 const CatalogPage = ({ query }: { query: IQueryParams }) => {
   const mode = useUnit($mode);
   const productManufacturers = useUnit($productManufacturers);
-  const partsManufacturer = useUnit($partsManufacturer);
+  const partsManufacturers = useUnit($partsManufacturers);
   const productParts = useUnit($productParts);
   const pagesCount = Math.ceil(productParts.count / 20);
   const isValidOffset =
@@ -40,7 +42,7 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
   const isAnyProductManufacturerChecked = productManufacturers.some(
     (item) => item.checked
   );
-  const isAnyPartsManufacturerChecked = partsManufacturer.some(
+  const isAnyPartsManufacturerChecked = partsManufacturers.some(
     (item) => item.checked
   );
   const resetFilterBtnDisabled = !(
@@ -150,10 +152,22 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
         </h2>
         <div className={`${styles.catalog__top} ${darkModeClass}`}>
           <AnimatePresence>
-            <ManufacturersBlock title="Производитель товара:" />
+            {isAnyProductManufacturerChecked && (
+              <ManufacturersBlock
+                title="Производитель товара:"
+                event={updateProductManufacturers}
+                manufacturersList={productManufacturers}
+              />
+            )}
           </AnimatePresence>
           <AnimatePresence>
-            <ManufacturersBlock title="Производитель запчастей:" />
+            {isAnyPartsManufacturerChecked && (
+              <ManufacturersBlock
+                title="Производитель запчастей:"
+                event={updatePartsManufacturers}
+                manufacturersList={partsManufacturers}
+              />
+            )}
           </AnimatePresence>
           <div className={styles.catalog__top__inner}>
             <button
