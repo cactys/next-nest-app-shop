@@ -29,7 +29,6 @@ const ManufacturersBlock = ({
             <ManufacturersBlockItem key={item.id} item={item} event={event} />
           ))}
         </AnimatePresence>
-        {/* https://youtu.be/qK1ENlEucpc?t=33805 */}
       </ul>
     </motion.div>
   );

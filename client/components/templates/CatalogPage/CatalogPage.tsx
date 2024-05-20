@@ -144,6 +144,8 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
     }
   };
 
+  // https://youtu.be/qK1ENlEucpc?t=33814
+
   return (
     <section className={styles.catalog}>
       <div className={`container ${styles.catalog__container}`}>
