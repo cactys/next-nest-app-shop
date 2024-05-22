@@ -21,6 +21,7 @@ const CatalogFiltersDesktop = ({
   setIsPriceChanged,
   resetFilterBtnDisabled,
   spinner,
+  resetFilters,
 }: ICatalogFilterDesktopProps) => {
   const mode = useUnit($mode);
   const productManufacturers = useUnit($productManufacturers);
@@ -78,7 +79,8 @@ const CatalogFiltersDesktop = ({
         </button>
         <button
           className={styles.filters__actions__reset}
-          disabled={resetFilterBtnDisabled}>
+          disabled={resetFilterBtnDisabled}
+          onClick={resetFilters}>
           Сбросить
         </button>
       </div>

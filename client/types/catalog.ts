@@ -9,7 +9,6 @@ export interface IManufacturersBlockProps {
 export interface IManufacturersBlockItemProps {
   item: IFilterCheckboxItem;
   event: Event<IFilterCheckboxItem>;
-
 }
 
 export interface IQueryParams {
@@ -35,14 +34,18 @@ export interface IFilterManufacturerAccordionProps {
   updateManufacturer: Event<IFilterCheckboxItem>;
 }
 
+export interface ICatalogFiltersProps {
+  priceRange: number[];
+  setPriceRange: (arg: number[]) => void;
+  setIsPriceChanged: (arg: boolean) => void;
+  resetFilterBtnDisabled: boolean;
+  resetFilters: VoidFunction;
+}
+
 export interface IPriceRangeProps {
   priceRange: number[];
   setPriceRange: (arg: number[]) => void;
   setIsPriceChanged: (arg: boolean) => void;
-}
-
-export interface ICatalogFiltersProps extends IPriceRangeProps {
-  resetFilterBtnDisabled: boolean;
 }
 
 export interface ICatalogFilterDesktopProps extends ICatalogFiltersProps {

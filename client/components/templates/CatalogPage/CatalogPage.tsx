@@ -9,6 +9,8 @@ import {
   $partsManufacturers,
   $productManufacturers,
   $productParts,
+  setPartsManufacturers,
+  setProductManufacturers,
   setProductParts,
   updatePartsManufacturers,
   updateProductManufacturers,
@@ -144,10 +146,29 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
     }
   };
 
-  // https://youtu.be/qK1ENlEucpc?t=33814
+  const resetFilters = async () => {
+    try {
+      const data = await getProductPartsFx('/product-parts?limit=20&offset=0');
+
+      setProductManufacturers(
+        productManufacturers.map((item) => ({ ...item, checked: false }))
+      );
+
+      setPartsManufacturers(
+        partsManufacturers.map((item) => ({ ...item, checked: false }))
+      );
+
+      setProductParts(data);
+      setPriceRange([1000, 9000]);
+      setIsPriceRangeChange(false);
+    } catch (error) {
+      toast.error((error as Error).message);
+    }
+  };
 
   return (
     <section className={styles.catalog}>
+      https://youtu.be/qK1ENlEucpc?t=33945
       <div className={`container ${styles.catalog__container}`}>
         <h2 className={`${styles.catalog__title} ${darkModeClass}`}>
           Каталог товаров
@@ -174,7 +195,8 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
           <div className={styles.catalog__top__inner}>
             <button
               className={`${styles.catalog__top__reset} ${darkModeClass}`}
-              disabled={resetFilterBtnDisabled}>
+              disabled={resetFilterBtnDisabled}
+              onClick={resetFilters}>
               Сбросить фильтр
             </button>
             <FilterSelect />
@@ -187,6 +209,7 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
               setPriceRange={setPriceRange}
               setIsPriceChanged={setIsPriceRangeChange}
               resetFilterBtnDisabled={resetFilterBtnDisabled}
+              resetFilters={resetFilters}
             />
             {spinner ? (
               <ul className={skeletonStyles.skeleton}>
