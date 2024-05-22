@@ -6,6 +6,7 @@ import ManufacturersBlock from '@/components/modules/CatalogPage/ManufacturersBl
 import FilterSelect from '@/components/modules/CatalogPage/FilterSelect';
 import { getProductPartsFx } from '@/app/api/productParts';
 import {
+  $filteredProductParts,
   $partsManufacturers,
   $productManufacturers,
   $productParts,
@@ -29,6 +30,7 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
   const mode = useUnit($mode);
   const productManufacturers = useUnit($productManufacturers);
   const partsManufacturers = useUnit($partsManufacturers);
+  const filteredProductParts = useUnit($filteredProductParts);
   const productParts = useUnit($productParts);
   const pagesCount = Math.ceil(productParts.count / 20);
   const isValidOffset =
@@ -38,6 +40,7 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
   );
   const [spinner, setSpinner] = useState(false);
   const [priceRange, setPriceRange] = useState([1000, 9000]);
+  const [isFilterInQuery, setIsFilterInQuery] = useState(false);
   const [isPriceRangeChange, setIsPriceRangeChange] = useState(false);
   const darkModeClass = mode === 'dark' ? `${styles.dark_mode}` : '';
   const router = useRouter();
@@ -55,7 +58,7 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
 
   useEffect(() => {
     loadProductParts();
-  }, []);
+  }, [filteredProductParts, isFilterInQuery]);
 
   const resetPagination = (data: IProductParts) => {
     setCurrentPage(0);
@@ -91,18 +94,23 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
             { shallow: true }
           );
 
-          resetPagination(data);
+          setCurrentPage(0);
+          resetPagination(isFilterInQuery ? filteredProductParts : data);
           return;
         }
+
+        const offset = +query.offset - 1;
+        const result = await getProductPartsFx(
+          `/product-parts?limit=20&offset=${offset}`
+        );
+
+        setCurrentPage(offset);
+        setProductParts(isFilterInQuery ? filteredProductParts : result);
+        return;
       }
 
-      const offset = +query.offset - 1;
-      const result = await getProductPartsFx(
-        `/product-parts?limit=20&offset=${offset}`
-      );
-
-      setCurrentPage(offset);
-      setProductParts(result);
+      setCurrentPage(0);
+      resetPagination(isFilterInQuery ? filteredProductParts : data);
     } catch (error) {
       toast.error((error as Error).message);
     } finally {
@@ -166,9 +174,11 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
     }
   };
 
+  console.log(productParts.rows);
+
   return (
     <section className={styles.catalog}>
-      https://youtu.be/qK1ENlEucpc?t=33945
+      https://youtu.be/qK1ENlEucpc?t=34987
       <div className={`container ${styles.catalog__container}`}>
         <h2 className={`${styles.catalog__title} ${darkModeClass}`}>
           Каталог товаров
@@ -210,6 +220,9 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
               setIsPriceChanged={setIsPriceRangeChange}
               resetFilterBtnDisabled={resetFilterBtnDisabled}
               resetFilters={resetFilters}
+              isPriceRangeChange={isPriceRangeChange}
+              currentPage={currentPage}
+              setIsFilterInQuery={setIsFilterInQuery}
             />
             {spinner ? (
               <ul className={skeletonStyles.skeleton}>

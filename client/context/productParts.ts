@@ -1,5 +1,5 @@
 import { IFilterCheckboxItem } from '@/types/catalog';
-import { IProductParts } from '@/types/product-parts';
+import { IProductPart, IProductParts } from '@/types/product-parts';
 import { partsManufacturers, productManufacturers } from '@/utils/catalog';
 import { createDomain } from 'effector-next';
 
@@ -10,6 +10,7 @@ export const setProductParts = productParts.createEvent<IProductParts>();
 export const setProductPartsCheapFirst = productParts.createEvent();
 export const setProductPartsExpensiveFirst = productParts.createEvent();
 export const setProductPartsByPopularity = productParts.createEvent();
+export const setFilteredProductParts = productParts.createEvent();
 export const setProductManufacturers =
   productParts.createEvent<IFilterCheckboxItem[]>();
 export const updateProductManufacturers =
@@ -72,3 +73,7 @@ export const $partsManufacturers = productParts
       checked: payload.checked,
     }),
   ]);
+
+export const $filteredProductParts = productParts
+  .createStore<IProductParts>({} as IProductParts)
+  .on(setFilteredProductParts, (_, parts) => parts);

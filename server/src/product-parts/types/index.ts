@@ -128,3 +128,9 @@ export interface IProductPartsQuery {
   priceFrom: string | undefined;
   priceTo: string | undefined;
 }
+
+export interface IProductPartsFilter {
+  product_manufacturer: string | undefined;
+  parts_manufacturer: string | undefined;
+  price: { [Op.between]: number[] };
+}
