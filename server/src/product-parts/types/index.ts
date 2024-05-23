@@ -114,12 +114,6 @@ export class GetByNameRequest {
 
 export class FindOneResponse extends ProductParts {}
 
-export interface IProductPartsFilter {
-  product_manufacturer: string | undefined;
-  parts_manufacturer: string | undefined;
-  price: { [Op.between]: number[] };
-}
-
 export interface IProductPartsQuery {
   limit: string;
   offset: string;
@@ -131,6 +125,6 @@ export interface IProductPartsQuery {
 
 export interface IProductPartsFilter {
   product_manufacturer: string | undefined;
-  parts_manufacturer: string | undefined;
+  part_manufacturer: string | undefined;
   price: { [Op.between]: number[] };
 }

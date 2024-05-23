@@ -123,17 +123,29 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
       const data = await getProductPartsFx('/product-parts?limit=20&offset=0');
 
       if (selected > pagesCount) {
-        resetPagination(data);
+        resetPagination(isFilterInQuery ? filteredProductParts : data);
         return;
       }
 
       if (isValidOffset && +query.offset > Math.ceil(data.count / 2)) {
-        resetPagination(data);
+        resetPagination(isFilterInQuery ? filteredProductParts : data);
         return;
       }
 
       const result = await getProductPartsFx(
-        `/product-parts?limit=20&offset=${selected}`
+        `/product-parts?limit=20&offset=${selected}${
+          isFilterInQuery && router.query.product
+            ? `&product=${router.query.product}`
+            : ''
+        }${
+          isFilterInQuery && router.query.parts
+            ? `&parts=${router.query.parts}`
+            : ''
+        }${
+          isFilterInQuery && router.query.priceFrom && router.query.priceTo
+            ? `&priceFrom=${router.query.priceFrom}&priceTo=${router.query.priceTo}`
+            : ''
+        }`
       );
 
       router.push(
@@ -157,6 +169,15 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
   const resetFilters = async () => {
     try {
       const data = await getProductPartsFx('/product-parts?limit=20&offset=0');
+      const params = router.query;
+
+      delete params.product;
+      delete params.parts;
+      delete params.priceFrom;
+      delete params.priceTo;
+      params.first = 'cheap';
+
+      router.push({ query: { ...params } }, undefined, { shallow: true });
 
       setProductManufacturers(
         productManufacturers.map((item) => ({ ...item, checked: false }))
@@ -178,7 +199,7 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
 
   return (
     <section className={styles.catalog}>
-      https://youtu.be/qK1ENlEucpc?t=34987
+      https://youtu.be/qK1ENlEucpc?t=35422
       <div className={`container ${styles.catalog__container}`}>
         <h2 className={`${styles.catalog__title} ${darkModeClass}`}>
           Каталог товаров

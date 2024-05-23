@@ -46,11 +46,11 @@ module.exports = {
           [...Array(7)].map(
             () =>
               `${faker.image.urlLoremFlickr({
-                category: 'electricalequipment',
-              })}?random=${faker.string.numeric(30)}`,
+                category: 'transport',
+              })}`,
           ),
         ),
-        vendor_code: faker.internet.password(),
+        vendor_code: faker.number.int({ min: 100000 }),
         in_stock: faker.string.numeric(1),
         bestseller: faker.datatype.boolean(),
         new: faker.datatype.boolean(),

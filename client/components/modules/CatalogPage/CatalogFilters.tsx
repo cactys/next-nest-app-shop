@@ -149,6 +149,46 @@ const CatalogFilters = ({
         );
         setFilteredProductParts(data);
       }
+
+      if (product.length && isPriceRangeChange) {
+        router.push(
+          {
+            query: {
+              ...router.query,
+              product: encodedProductQuery,
+              priceFrom,
+              priceTo,
+              offset: initialPage + 1,
+            },
+          },
+          undefined,
+          { shallow: true }
+        );
+        const data = await getProductPartsFx(
+          `/product-parts?limit=20&offset=${initialPage}${productQuery}${priceQuery}`
+        );
+        setFilteredProductParts(data);
+      }
+
+      if (parts.length && isPriceRangeChange) {
+        router.push(
+          {
+            query: {
+              ...router.query,
+              parts: encodedPartsQuery,
+              priceFrom,
+              priceTo,
+              offset: initialPage + 1,
+            },
+          },
+          undefined,
+          { shallow: true }
+        );
+        const data = await getProductPartsFx(
+          `/product-parts?limit=20&offset=${initialPage}${partsQuery}${priceQuery}`
+        );
+        setFilteredProductParts(data);
+      }
     } catch (error) {
       toast.error((error as Error).message);
     } finally {

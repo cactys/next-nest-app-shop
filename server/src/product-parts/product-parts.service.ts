@@ -29,7 +29,7 @@ export class ProductPartsService {
     }
 
     if (query.parts) {
-      filter.parts_manufacturer = JSON.parse(decodeURIComponent(query.parts));
+      filter.part_manufacturer = JSON.parse(decodeURIComponent(query.parts));
     }
 
     return this.productParamsModel.findAndCountAll({
