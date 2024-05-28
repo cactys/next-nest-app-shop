@@ -19,6 +19,10 @@ export const setPartsManufacturers =
   productParts.createEvent<IFilterCheckboxItem[]>();
 export const updatePartsManufacturers =
   productParts.createEvent<IFilterCheckboxItem>();
+export const setProductManufacturersFromQuery =
+  productParts.createEvent<string[]>();
+export const setPartsManufacturersFromQuery =
+  productParts.createEvent<string[]>();
 
 const updateManufacturer = (
   manufacturers: IFilterCheckboxItem[],
@@ -30,6 +34,21 @@ const updateManufacturer = (
       return {
         ...item,
         ...payload,
+      };
+    }
+
+    return item;
+  });
+
+const updateManufacturerFromQuery = (
+  manufacturers: IFilterCheckboxItem[],
+  manufacturersFromQuery: string[]
+) =>
+  manufacturers.map((item) => {
+    if (manufacturersFromQuery.find((title) => title === item.title)) {
+      return {
+        ...item,
+        checked: true,
       };
     }
 

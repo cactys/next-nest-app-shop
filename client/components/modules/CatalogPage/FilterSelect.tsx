@@ -19,7 +19,11 @@ import {
 } from '@/context/productParts';
 import { useRouter } from 'next/router';
 
-const FilterSelect = () => {
+const FilterSelect = ({
+  setSpinner,
+}: {
+  setSpinner: (arg0: boolean) => void;
+}) => {
   const mode = useUnit($mode);
   const productParts = useUnit($productParts);
   const [categoryOption, setCategoryOption] = useState<TSelectOptionType>(null);
@@ -66,6 +70,7 @@ const FilterSelect = () => {
   };
 
   const handleSortOptionChange = (selectedOption: TSelectOptionType) => {
+    setSpinner(true);
     setCategoryOption(selectedOption);
 
     switch ((selectedOption as IOption).value) {
@@ -82,6 +87,8 @@ const FilterSelect = () => {
         updateRouteParam('popularity');
         break;
     }
+
+    setTimeout(() => setSpinner(false), 1000);
   };
 
   return (

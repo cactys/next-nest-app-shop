@@ -114,12 +114,13 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
     } catch (error) {
       toast.error((error as Error).message);
     } finally {
-      setSpinner(false);
+      setTimeout(() => setSpinner(false), 1000);
     }
   };
 
   const handlePageChange = async ({ selected }: { selected: number }) => {
     try {
+      setSpinner(true);
       const data = await getProductPartsFx('/product-parts?limit=20&offset=0');
 
       if (selected > pagesCount) {
@@ -163,6 +164,8 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
       setProductParts(result);
     } catch (error) {
       toast.error((error as Error).message);
+    } finally {
+      setTimeout(() => setSpinner(false), 1000);
     }
   };
 
@@ -199,8 +202,8 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
 
   return (
     <section className={styles.catalog}>
-      https://youtu.be/qK1ENlEucpc?t=35422
       <div className={`container ${styles.catalog__container}`}>
+        https://youtu.be/qK1ENlEucpc?t=36170
         <h2 className={`${styles.catalog__title} ${darkModeClass}`}>
           Каталог товаров
         </h2>
@@ -230,7 +233,7 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
               onClick={resetFilters}>
               Сбросить фильтр
             </button>
-            <FilterSelect />
+            <FilterSelect setSpinner={setSpinner} />
           </div>
         </div>
         <div className={`${styles.catalog__bottom} ${darkModeClass}`}>
@@ -247,7 +250,7 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
             />
             {spinner ? (
               <ul className={skeletonStyles.skeleton}>
-                {Array.from(new Array(8)).map((_, i) => (
+                {Array.from(new Array(20)).map((_, i) => (
                   <li
                     key={i}
                     className={`${skeletonStyles.skeleton__item} ${

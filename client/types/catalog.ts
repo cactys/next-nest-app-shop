@@ -36,25 +36,25 @@ export interface IFilterManufacturerAccordionProps {
 
 export interface ICatalogFiltersProps {
   priceRange: number[];
-  setPriceRange: (arg: number[]) => void;
-  setIsPriceChanged: (arg: boolean) => void;
+  setPriceRange: (arg0: number[]) => void;
+  setIsPriceChanged: (arg0: boolean) => void;
   resetFilterBtnDisabled: boolean;
   resetFilters: VoidFunction;
   isPriceRangeChange: boolean;
   currentPage: number;
-  setIsFilterInQuery: (arg: boolean) => void;
+  setIsFilterInQuery: (arg0: boolean) => void;
 }
 
 export interface IPriceRangeProps {
   priceRange: number[];
-  setPriceRange: (arg: number[]) => void;
-  setIsPriceChanged: (arg: boolean) => void;
+  setPriceRange: (arg0: number[]) => void;
+  setIsPriceChanged: (arg0: boolean) => void;
 }
 
 export interface ICatalogFilterDesktopProps {
   priceRange: number[];
-  setPriceRange: (arg: number[]) => void;
-  setIsPriceChanged: (arg: boolean) => void;
+  setPriceRange: (arg0: number[]) => void;
+  setIsPriceChanged: (arg0: boolean) => void;
   resetFilterBtnDisabled: boolean;
   resetFilters: VoidFunction;
   spinner: boolean;
