@@ -7,6 +7,8 @@ import {
   $productManufacturers,
   $partsManufacturers,
   setFilteredProductParts,
+  setProductManufacturersFromQuery,
+  setPartsManufacturersFromQuery,
 } from '@/context/productParts';
 import { useUnit } from 'effector-react';
 import { useRouter } from 'next/router';
@@ -16,7 +18,7 @@ import { getQueryParamOnFirstRender } from '@/utils/common';
 const CatalogFilters = ({
   priceRange,
   setPriceRange,
-  setIsPriceChanged,
+  setIsPriceRangeChange,
   resetFilterBtnDisabled,
   resetFilters,
   isPriceRangeChange,
@@ -38,8 +40,11 @@ const CatalogFilters = ({
       const priceFromQueryValue = getQueryParamOnFirstRender(
         'priceFrom',
         router
-      );
-      const priceToQueryValue = getQueryParamOnFirstRender('priceTo', router);
+      ) as unknown as string;
+      const priceToQueryValue = getQueryParamOnFirstRender(
+        'priceTo',
+        router
+      ) as unknown as string;
       const productQueryValue = JSON.parse(
         decodeURIComponent(
           getQueryParamOnFirstRender('product', router) as unknown as string
@@ -58,9 +63,85 @@ const CatalogFilters = ({
       const productQuery = `&product=${getQueryParamOnFirstRender('product', router)}`;
       const partsQuery = `&parts=${getQueryParamOnFirstRender('parts', router)}`;
       const priceQuery = `&priceFrom=${priceFromQueryValue}&priceTo=${priceToQueryValue}`;
+
+      if (
+        isValidProductQuery &&
+        isValidPartsQuery &&
+        priceFromQueryValue &&
+        priceToQueryValue
+      ) {
+        updateParamsAndFiltersFromQuery(() => {
+          updatePriceFromQuery(+priceFromQueryValue, +priceToQueryValue);
+          setProductManufacturersFromQuery(productQueryValue);
+          setPartsManufacturersFromQuery(partsQueryValue);
+        }, `${currentPage}${priceQuery}${productQuery}${partsQuery}`);
+        return;
+      }
+
+      if (priceFromQueryValue && priceToQueryValue) {
+        updateParamsAndFiltersFromQuery(() => {
+          updatePriceFromQuery(+priceFromQueryValue, +priceToQueryValue);
+        }, `${currentPage}${priceQuery}`);
+      }
+
+      if (isValidProductQuery && isValidPartsQuery) {
+        updateParamsAndFiltersFromQuery(() => {
+          setIsFilterInQuery(true);
+          setProductManufacturersFromQuery(productQueryValue);
+          setPartsManufacturersFromQuery(partsQueryValue);
+        }, `${currentPage}${productQuery}${partsQuery}`);
+        return;
+      }
+
+      if (isValidProductQuery) {
+        updateParamsAndFiltersFromQuery(() => {
+          setIsFilterInQuery(true);
+          setProductManufacturersFromQuery(productQueryValue);
+        }, `${currentPage}${productQuery}`);
+      }
+
+      if (isValidPartsQuery) {
+        updateParamsAndFiltersFromQuery(() => {
+          setIsFilterInQuery(true);
+          setPartsManufacturersFromQuery(partsQueryValue);
+        }, `${currentPage}${partsQuery}`);
+      }
+
+      if (isValidPartsQuery && priceFromQueryValue && priceToQueryValue) {
+        updateParamsAndFiltersFromQuery(() => {
+          updatePriceFromQuery(+priceFromQueryValue, +priceToQueryValue);
+          setPartsManufacturersFromQuery(partsQueryValue);
+        }, `${currentPage}${priceQuery}${partsQuery}`);
+      }
+
+      if (isValidProductQuery && priceFromQueryValue && priceToQueryValue) {
+        updateParamsAndFiltersFromQuery(() => {
+          updatePriceFromQuery(+priceFromQueryValue, +priceToQueryValue);
+          setProductManufacturersFromQuery(productQueryValue);
+        }, `${currentPage}${priceQuery}${productQuery}`);
+        return;
+      }
     } catch (error) {
       toast.error((error as Error).message);
     }
+  };
+
+  const updatePriceFromQuery = (priceFrom: number, priceTo: number) => {
+    setIsFilterInQuery(true);
+    setPriceRange([+priceFrom, +priceTo]);
+    setIsPriceRangeChange(true);
+  };
+
+  const updateParamsAndFiltersFromQuery = async (
+    callback: VoidFunction,
+    path: string
+  ) => {
+    callback();
+
+    const data = await getProductPartsFx(
+      `/product-parts?limit=20&offset=${path}`
+    );
+    setFilteredProductParts(data);
   };
 
   async function updateParamsAndFilters<T>(updatedParams: T, path: string) {
@@ -70,6 +151,8 @@ const CatalogFilters = ({
     delete params.parts;
     delete params.priceFrom;
     delete params.priceTo;
+
+    console.log(updatedParams);
 
     router.push(
       {
@@ -235,7 +318,7 @@ const CatalogFilters = ({
         <CatalogFiltersDesktop
           priceRange={priceRange}
           setPriceRange={setPriceRange}
-          setIsPriceChanged={setIsPriceChanged}
+          setIsPriceRangeChange={setIsPriceRangeChange}
           resetFilterBtnDisabled={resetFilterBtnDisabled}
           spinner={spinner}
           resetFilters={resetFilters}

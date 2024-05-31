@@ -80,6 +80,9 @@ export const $productManufacturers = productParts
     ...updateManufacturer(state, payload.id as string, {
       checked: payload.checked,
     }),
+  ])
+  .on(setProductManufacturersFromQuery, (state, manufacturersFromQuery) => [
+    ...updateManufacturerFromQuery(state, manufacturersFromQuery),
   ]);
 
 export const $partsManufacturers = productParts
@@ -91,6 +94,9 @@ export const $partsManufacturers = productParts
     ...updateManufacturer(state, payload.id as string, {
       checked: payload.checked,
     }),
+  ])
+  .on(setPartsManufacturersFromQuery, (state, manufacturersFromQuery) => [
+    ...updateManufacturerFromQuery(state, manufacturersFromQuery),
   ]);
 
 export const $filteredProductParts = productParts

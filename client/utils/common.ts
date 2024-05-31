@@ -40,6 +40,8 @@ export const getQueryParamOnFirstRender = (
   queryName: string,
   router: NextRouter
 ) => {
-  router.query[queryName] ||
-    router.asPath.match(new RegExp(`[&?]${queryName}=(.*)(&|$)`));
+  return (
+    router.query[queryName] ||
+    router.asPath.match(new RegExp(`[&?]${queryName}=(.*)(&|$)`))
+  );
 };

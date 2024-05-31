@@ -202,8 +202,8 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
 
   return (
     <section className={styles.catalog}>
+      https://youtu.be/qK1ENlEucpc?t=36684
       <div className={`container ${styles.catalog__container}`}>
-        https://youtu.be/qK1ENlEucpc?t=36170
         <h2 className={`${styles.catalog__title} ${darkModeClass}`}>
           Каталог товаров
         </h2>
@@ -241,7 +241,7 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
             <CatalogFilters
               priceRange={priceRange}
               setPriceRange={setPriceRange}
-              setIsPriceChanged={setIsPriceRangeChange}
+              setIsPriceRangeChange={setIsPriceRangeChange}
               resetFilterBtnDisabled={resetFilterBtnDisabled}
               resetFilters={resetFilters}
               isPriceRangeChange={isPriceRangeChange}

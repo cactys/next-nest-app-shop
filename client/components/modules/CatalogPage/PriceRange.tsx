@@ -11,13 +11,13 @@ const MAX = 10000;
 const PriceRange = ({
   priceRange,
   setPriceRange,
-  setIsPriceChanged,
+  setIsPriceRangeChange,
 }: IPriceRangeProps) => {
   const mode = useUnit($mode);
   const darkModeClass = mode === 'dark' ? `${styles.dark_mode}` : '';
 
   const handlePriceRangeChange = (value: number[]) => {
-    setIsPriceChanged(true);
+    setIsPriceRangeChange(true);
     setPriceRange(value);
   };
 

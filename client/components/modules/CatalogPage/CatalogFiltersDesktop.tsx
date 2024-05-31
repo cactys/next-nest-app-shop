@@ -18,7 +18,7 @@ import spinnerStyles from '@/styles/spinner/index.module.scss';
 const CatalogFiltersDesktop = ({
   priceRange,
   setPriceRange,
-  setIsPriceChanged,
+  setIsPriceRangeChange,
   resetFilterBtnDisabled,
   spinner,
   resetFilters,
@@ -52,7 +52,7 @@ const CatalogFiltersDesktop = ({
             <PriceRange
               priceRange={priceRange}
               setPriceRange={setPriceRange}
-              setIsPriceChanged={setIsPriceChanged}
+              setIsPriceRangeChange={setIsPriceRangeChange}
             />
           </div>
         </Accordion>
