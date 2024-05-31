@@ -38,11 +38,16 @@ interface ICatalogBaseType {
   priceRange: number[];
   setPriceRange: (arg0: number[]) => void;
   setIsPriceRangeChange: (arg0: boolean) => void;
+}
+
+interface ICatalogFiltersBaseType {
   resetFilterBtnDisabled: boolean;
   resetFilters: VoidFunction;
 }
 
-export interface ICatalogFiltersProps extends ICatalogBaseType {
+export interface ICatalogFiltersProps
+  extends ICatalogBaseType,
+    ICatalogFiltersBaseType {
   isPriceRangeChange: boolean;
   currentPage: number;
   setIsFilterInQuery: (arg0: boolean) => void;
@@ -50,12 +55,16 @@ export interface ICatalogFiltersProps extends ICatalogBaseType {
 
 export type IPriceRangeProps = ICatalogBaseType;
 
-export interface ICatalogFilterDesktopProps extends ICatalogBaseType {
+export interface ICatalogFilterDesktopProps
+  extends ICatalogBaseType,
+    ICatalogFiltersBaseType {
   spinner: boolean;
   applyFilters: VoidFunction;
 }
 
-export interface ICatalogFilterMobileProps extends ICatalogBaseType {
+export interface ICatalogFilterMobileProps
+  extends ICatalogBaseType,
+    ICatalogFiltersBaseType {
   priceRange: number[];
   setPriceRange: (arg0: number[]) => void;
   setIsPriceRangeChange: (arg0: boolean) => void;

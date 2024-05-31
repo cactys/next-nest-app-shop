@@ -6,7 +6,11 @@ import { ICatalogFilterMobileProps } from '@/types/catalog';
 const CatalogFiltersMobile = ({}: ICatalogFilterMobileProps) => {
   const mode = useUnit($mode);
   const darkModeClass = mode === 'dark' ? `${styles.dark_mode}` : '';
-  return <div></div>;
+  return (
+    <div className={`${styles.catalog__bottom__filters} ${darkModeClass}`}>
+      https://youtu.be/qK1ENlEucpc?t=36765
+    </div>
+  );
 };
 
 export default CatalogFiltersMobile;

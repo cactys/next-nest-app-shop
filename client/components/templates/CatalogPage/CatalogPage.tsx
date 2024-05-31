@@ -202,7 +202,6 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
 
   return (
     <section className={styles.catalog}>
-      https://youtu.be/qK1ENlEucpc?t=36684
       <div className={`container ${styles.catalog__container}`}>
         <h2 className={`${styles.catalog__title} ${darkModeClass}`}>
           Каталог товаров
