@@ -25,14 +25,22 @@ import { IQueryParams } from '@/types/catalog';
 import { useRouter } from 'next/router';
 import { IProductParts } from '@/types/product-parts';
 import CatalogFilters from '@/components/modules/CatalogPage/CatalogFilters';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { usePopup } from '@/hooks/usePopup';
+import { checkQueryParams } from '@/utils/catalog';
 
 const CatalogPage = ({ query }: { query: IQueryParams }) => {
+  const isMedia768 = useMediaQuery(768);
+  const skeletonArray = isMedia768 ? 18 : 20;
+
   const mode = useUnit($mode);
   const productManufacturers = useUnit($productManufacturers);
   const partsManufacturers = useUnit($partsManufacturers);
   const filteredProductParts = useUnit($filteredProductParts);
   const productParts = useUnit($productParts);
-  const pagesCount = Math.ceil(productParts.count / 20);
+  const pagesCount = Math.ceil(
+    isMedia768 ? productParts.count / 18 : productParts.count / 20
+  );
   const isValidOffset =
     query.offset && !isNaN(+query.offset) && +query.offset > 0;
   const [currentPage, setCurrentPage] = useState(
@@ -55,6 +63,7 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
     isAnyProductManufacturerChecked ||
     isAnyPartsManufacturerChecked
   );
+  const { toggleOpen, open, closePopup } = usePopup();
 
   useEffect(() => {
     loadProductParts();
@@ -68,7 +77,9 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
   const loadProductParts = async () => {
     try {
       setSpinner(true);
-      const data = await getProductPartsFx('/product-parts?limit=20&offset=0');
+      const data = await getProductPartsFx(
+        `${isMedia768 ? '/product-parts?limit=18&offset=0' : '/product-parts?limit=20&offset=0'}`
+      );
 
       if (!isValidOffset) {
         router.replace({
@@ -82,7 +93,10 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
       }
 
       if (isValidOffset) {
-        if (+query.offset > Math.ceil(data.count / 20)) {
+        if (
+          +query.offset >
+          Math.ceil(isMedia768 ? data.count / 18 : data.count / 20)
+        ) {
           router.push(
             {
               query: {
@@ -101,7 +115,7 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
 
         const offset = +query.offset - 1;
         const result = await getProductPartsFx(
-          `/product-parts?limit=20&offset=${offset}`
+          `${isMedia768 ? `/product-parts?limit=18&offset=${offset}` : `/product-parts?limit=20&offset=${offset}`}`
         );
 
         setCurrentPage(offset);
@@ -121,7 +135,9 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
   const handlePageChange = async ({ selected }: { selected: number }) => {
     try {
       setSpinner(true);
-      const data = await getProductPartsFx('/product-parts?limit=20&offset=0');
+      const data = await getProductPartsFx(
+        `${isMedia768 ? '/product-parts?limit=18&offset=0' : '/product-parts?limit=20&offset=0'}`
+      );
 
       if (selected > pagesCount) {
         resetPagination(isFilterInQuery ? filteredProductParts : data);
@@ -133,17 +149,20 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
         return;
       }
 
+      const { isValidProductQuery, isValidPartsQuery, isValidPriceQuery } =
+        checkQueryParams(router);
+
       const result = await getProductPartsFx(
-        `/product-parts?limit=20&offset=${selected}${
-          isFilterInQuery && router.query.product
+        `${isMedia768 ? '/product-parts?limit=18&offset=' : '/product-parts?limit=20&offset='}${selected}${
+          isFilterInQuery && isValidProductQuery
             ? `&product=${router.query.product}`
             : ''
         }${
-          isFilterInQuery && router.query.parts
+          isFilterInQuery && isValidPartsQuery
             ? `&parts=${router.query.parts}`
             : ''
         }${
-          isFilterInQuery && router.query.priceFrom && router.query.priceTo
+          isFilterInQuery && isValidPriceQuery
             ? `&priceFrom=${router.query.priceFrom}&priceTo=${router.query.priceTo}`
             : ''
         }`
@@ -171,7 +190,9 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
 
   const resetFilters = async () => {
     try {
-      const data = await getProductPartsFx('/product-parts?limit=20&offset=0');
+      const data = await getProductPartsFx(
+        `${isMedia768 ? '/product-parts?limit=18&offset=0' : '/product-parts?limit=20&offset=0'}`
+      );
       const params = router.query;
 
       delete params.product;
@@ -246,10 +267,12 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
               isPriceRangeChange={isPriceRangeChange}
               currentPage={currentPage}
               setIsFilterInQuery={setIsFilterInQuery}
+              closePopup={closePopup}
+              filtersMobileOpen={open}
             />
             {spinner ? (
               <ul className={skeletonStyles.skeleton}>
-                {Array.from(new Array(20)).map((_, i) => (
+                {Array.from(new Array(skeletonArray)).map((_, i) => (
                   <li
                     key={i}
                     className={`${skeletonStyles.skeleton__item} ${

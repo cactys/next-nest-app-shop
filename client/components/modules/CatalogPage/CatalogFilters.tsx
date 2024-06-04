@@ -14,6 +14,12 @@ import { useUnit } from 'effector-react';
 import { useRouter } from 'next/router';
 import { getProductPartsFx } from '@/app/api/productParts';
 import { getQueryParamOnFirstRender } from '@/utils/common';
+import CatalogFiltersMobile from './CatalogFiltersMobile';
+import {
+  checkQueryParams,
+  updateParamsAndFilters,
+  updateParamsAndFiltersFromQuery,
+} from '@/utils/catalog';
 
 const CatalogFilters = ({
   priceRange,
@@ -24,6 +30,8 @@ const CatalogFilters = ({
   isPriceRangeChange,
   currentPage,
   setIsFilterInQuery,
+  closePopup,
+  filtersMobileOpen,
 }: ICatalogFiltersProps) => {
   const isMobile = useMediaQuery(820);
   const [spinner, setSpinner] = useState(false);
@@ -37,39 +45,21 @@ const CatalogFilters = ({
 
   const applyFiltersFromQuery = async () => {
     try {
-      const priceFromQueryValue = getQueryParamOnFirstRender(
-        'priceFrom',
-        router
-      ) as unknown as string;
-      const priceToQueryValue = getQueryParamOnFirstRender(
-        'priceTo',
-        router
-      ) as unknown as string;
-      const productQueryValue = JSON.parse(
-        decodeURIComponent(
-          getQueryParamOnFirstRender('product', router) as unknown as string
-        )
-      );
-      const partsQueryValue = JSON.parse(
-        decodeURIComponent(
-          getQueryParamOnFirstRender('parts', router) as unknown as string
-        )
-      );
-      const isValidProductQuery =
-        Array.isArray(productQueryValue) && !!productQueryValue?.length;
-      const isValidPartsQuery =
-        Array.isArray(partsQueryValue) && !!partsQueryValue?.length;
+      const {
+        isValidProductQuery,
+        isValidPartsQuery,
+        isValidPriceQuery,
+        priceFromQueryValue,
+        priceToQueryValue,
+        productQueryValue,
+        partsQueryValue,
+      } = checkQueryParams(router);
 
       const productQuery = `&product=${getQueryParamOnFirstRender('product', router)}`;
       const partsQuery = `&parts=${getQueryParamOnFirstRender('parts', router)}`;
       const priceQuery = `&priceFrom=${priceFromQueryValue}&priceTo=${priceToQueryValue}`;
 
-      if (
-        isValidProductQuery &&
-        isValidPartsQuery &&
-        priceFromQueryValue &&
-        priceToQueryValue
-      ) {
+      if (isValidProductQuery && isValidPartsQuery && isValidPriceQuery) {
         updateParamsAndFiltersFromQuery(() => {
           updatePriceFromQuery(+priceFromQueryValue, +priceToQueryValue);
           setProductManufacturersFromQuery(productQueryValue);
@@ -78,7 +68,7 @@ const CatalogFilters = ({
         return;
       }
 
-      if (priceFromQueryValue && priceToQueryValue) {
+      if (isValidPriceQuery) {
         updateParamsAndFiltersFromQuery(() => {
           updatePriceFromQuery(+priceFromQueryValue, +priceToQueryValue);
         }, `${currentPage}${priceQuery}`);
@@ -107,14 +97,14 @@ const CatalogFilters = ({
         }, `${currentPage}${partsQuery}`);
       }
 
-      if (isValidPartsQuery && priceFromQueryValue && priceToQueryValue) {
+      if (isValidPartsQuery && isValidPriceQuery) {
         updateParamsAndFiltersFromQuery(() => {
           updatePriceFromQuery(+priceFromQueryValue, +priceToQueryValue);
           setPartsManufacturersFromQuery(partsQueryValue);
         }, `${currentPage}${priceQuery}${partsQuery}`);
       }
 
-      if (isValidProductQuery && priceFromQueryValue && priceToQueryValue) {
+      if (isValidProductQuery && isValidPriceQuery) {
         updateParamsAndFiltersFromQuery(() => {
           updatePriceFromQuery(+priceFromQueryValue, +priceToQueryValue);
           setProductManufacturersFromQuery(productQueryValue);
@@ -122,7 +112,15 @@ const CatalogFilters = ({
         return;
       }
     } catch (error) {
-      toast.error((error as Error).message);
+      const err = error as Error;
+
+      console.log(err);
+
+      if (err.message === 'URI malformed') {
+        toast.warning('Неправильный ulr для фильтров');
+        return;
+      }
+      toast.error(err.message);
     }
   };
 
@@ -131,44 +129,6 @@ const CatalogFilters = ({
     setPriceRange([+priceFrom, +priceTo]);
     setIsPriceRangeChange(true);
   };
-
-  const updateParamsAndFiltersFromQuery = async (
-    callback: VoidFunction,
-    path: string
-  ) => {
-    callback();
-
-    const data = await getProductPartsFx(
-      `/product-parts?limit=20&offset=${path}`
-    );
-    setFilteredProductParts(data);
-  };
-
-  async function updateParamsAndFilters<T>(updatedParams: T, path: string) {
-    const params = router.query;
-
-    delete params.product;
-    delete params.parts;
-    delete params.priceFrom;
-    delete params.priceTo;
-
-    console.log(updatedParams);
-
-    router.push(
-      {
-        query: {
-          ...params,
-          ...updatedParams,
-        },
-      },
-      undefined,
-      { shallow: true }
-    );
-    const data = await getProductPartsFx(
-      `/product-parts?limit=20&offset=${path}`
-    );
-    setFilteredProductParts(data);
-  }
 
   const applyFilters = async () => {
     setIsFilterInQuery(true);
@@ -204,7 +164,8 @@ const CatalogFilters = ({
             priceTo,
             offset: initialPage + 1,
           },
-          `${initialPage}${priceQuery}${productQuery}${partsQuery}`
+          `${initialPage}${priceQuery}${productQuery}${partsQuery}`,
+          router
         );
         const data = await getProductPartsFx(
           `/product-parts?limit=20&offset=${initialPage}${priceQuery}${productQuery}${partsQuery}`
@@ -220,7 +181,8 @@ const CatalogFilters = ({
             priceTo,
             offset: initialPage + 1,
           },
-          `${initialPage}${priceQuery}`
+          `${initialPage}${priceQuery}`,
+          router
         );
         const data = await getProductPartsFx(
           `/product-parts?limit=20&offset=${initialPage}${priceQuery}`
@@ -235,7 +197,8 @@ const CatalogFilters = ({
             parts: encodedPartsQuery,
             offset: initialPage + 1,
           },
-          `${initialPage}${productQuery}${partsQuery}`
+          `${initialPage}${productQuery}${partsQuery}`,
+          router
         );
         const data = await getProductPartsFx(
           `/product-parts?limit=20&offset=${initialPage}${productQuery}${partsQuery}`
@@ -250,7 +213,8 @@ const CatalogFilters = ({
             product: encodedProductQuery,
             offset: initialPage + 1,
           },
-          `${initialPage}${productQuery}`
+          `${initialPage}${productQuery}`,
+          router
         );
         const data = await getProductPartsFx(
           `/product-parts?limit=20&offset=${initialPage}${productQuery}`
@@ -264,7 +228,8 @@ const CatalogFilters = ({
             parts: encodedPartsQuery,
             offset: initialPage + 1,
           },
-          `${initialPage}${partsQuery}`
+          `${initialPage}${partsQuery}`,
+          router
         );
         const data = await getProductPartsFx(
           `/product-parts?limit=20&offset=${initialPage}${partsQuery}`
@@ -280,7 +245,8 @@ const CatalogFilters = ({
             priceTo,
             offset: initialPage + 1,
           },
-          `${initialPage}${productQuery}${priceQuery}`
+          `${initialPage}${productQuery}${priceQuery}`,
+          router
         );
         const data = await getProductPartsFx(
           `/product-parts?limit=20&offset=${initialPage}${productQuery}${priceQuery}`
@@ -296,7 +262,8 @@ const CatalogFilters = ({
             priceTo,
             offset: initialPage + 1,
           },
-          `${initialPage}${partsQuery}${priceQuery}`
+          `${initialPage}${partsQuery}${priceQuery}`,
+          router
         );
         const data = await getProductPartsFx(
           `/product-parts?limit=20&offset=${initialPage}${partsQuery}${priceQuery}`
@@ -313,7 +280,17 @@ const CatalogFilters = ({
   return (
     <>
       {isMobile ? (
-        <div />
+        <CatalogFiltersMobile
+          closePopup={closePopup}
+          spinner={spinner}
+          applyFilters={applyFilters}
+          priceRange={priceRange}
+          setPriceRange={setPriceRange}
+          setIsPriceRangeChange={setIsPriceRangeChange}
+          resetFilterBtnDisabled={resetFilterBtnDisabled}
+          resetFilters={resetFilters}
+          filtersMobileOpen={filtersMobileOpen}
+        />
       ) : (
         <CatalogFiltersDesktop
           priceRange={priceRange}
