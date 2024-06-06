@@ -16,7 +16,7 @@ const FiltersPopupTop = ({
     <div className={`${styles.catalog__bottom__filters__top} ${darkModeClass}`}>
       <button
         onClick={closePopup}
-        className={styles.catalog__bottom__filters__title}>
+        className={`${styles.catalog__bottom__filters__title} ${darkModeClass}`}>
         {title}
       </button>
       <button

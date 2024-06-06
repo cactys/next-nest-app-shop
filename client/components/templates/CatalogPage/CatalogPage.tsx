@@ -28,6 +28,7 @@ import CatalogFilters from '@/components/modules/CatalogPage/CatalogFilters';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { usePopup } from '@/hooks/usePopup';
 import { checkQueryParams } from '@/utils/catalog';
+import FilterSvg from '@/components/elements/FilterSvg/FilterSvg';
 
 const CatalogPage = ({ query }: { query: IQueryParams }) => {
   const isMedia768 = useMediaQuery(768);
@@ -252,6 +253,16 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
               disabled={resetFilterBtnDisabled}
               onClick={resetFilters}>
               Сбросить фильтр
+            </button>
+            <button
+              className={styles.catalog__top__mobile_btn}
+              onClick={toggleOpen}>
+              <span className={styles.catalog__top__mobile_btn__svg}>
+                <FilterSvg />
+              </span>
+              <span className={styles.catalog__top__mobile_btn__text}>
+                Фильтры
+              </span>
             </button>
             <FilterSelect setSpinner={setSpinner} />
           </div>

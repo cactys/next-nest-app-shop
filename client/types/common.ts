@@ -20,7 +20,7 @@ export interface IAccordion {
   children: ReactNode;
   title: string | false;
   titleClass: string;
-  arrowOpenClass: string;
+  arrowOpenClass?: string;
   isMobileForFilter?: boolean;
   hideArrowClass?: string;
 }
