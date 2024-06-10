@@ -19,6 +19,7 @@ const CartPopup = forwardRef<HTMLDivElement, IWrappedComponentProps>(
 
     return (
       <div className={styles.cart} ref={ref}>
+        https://youtu.be/qK1ENlEucpc?t=38820
         <button
           className={`${styles.cart__btn} ${darkModeClass}`}
           onClick={toggleCartDropDown}>

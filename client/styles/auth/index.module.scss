@@ -179,7 +179,7 @@ $transition: 1.25s;
   font-weight: 700;
   font-size: 14px;
   letter-spacing: 1.15px;
-  
+
 
   background-color: $purple;
   color: $white;
@@ -403,7 +403,7 @@ $transition: 1.25s;
 
 @keyframes is-gx {
   0%,
-  10%,
+  100%,
   100% {
     width: 40%;
 
@@ -424,7 +424,7 @@ $transition: 1.25s;
 
 @keyframes is-gx-mobile {
   0%,
-  10%,
+  100%,
   100% {
     width: 100px;
   }
@@ -437,7 +437,7 @@ $transition: 1.25s;
 
 @keyframes is-gx-mobile430 {
   0%,
-  10%,
+  100%,
   100% {
     width: 75px;
   }

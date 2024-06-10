@@ -66,7 +66,6 @@ const CatalogFiltersMobile = ({
     <div
       className={`${styles.catalog__bottom__filters} ${darkModeClass} ${filtersMobileOpen ? styles.open : ''}`}>
       <div className={styles.catalog__bottom__filters__inner}>
-      https://youtu.be/qK1ENlEucpc?t=38493
         <FiltersPopupTop
           resetBtnText="Сбросить все"
           title="Фильтры"
