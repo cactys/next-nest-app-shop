@@ -20,6 +20,7 @@ const CatalogItem = ({ item }: { item: IProductPart }) => {
 
   return (
     <li className={`${styles.catalog__list__item} ${darkModeClass}`}>
+      https://youtu.be/qK1ENlEucpc?t=39326
       <Link href={`/catalog/${item.id}`} passHref legacyBehavior>
         <img src={JSON.parse(item.images)} alt={item.name} />
       </Link>
