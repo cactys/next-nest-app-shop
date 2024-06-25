@@ -10,17 +10,22 @@ import CartHoverCheckedSvg from '@/components/elements/CartHoverCheckedSvg/CartH
 import CartHoverSvg from '@/components/elements/CartHoverSvg/CartHoverSvg';
 import styles from '@/styles/catalog/index.module.scss';
 import spinnerStyles from '@/styles/spinner/index.module.scss';
+import { $user } from '@/context/user';
+import { toggleCartItem } from '@/utils/shopping-cart';
 
 const CatalogItem = ({ item }: { item: IProductPart }) => {
   const mode = useUnit($mode);
+  const user = useUnit($user);
   const shoppingCart = useUnit($shoppingCart);
   const isInCart = shoppingCart.some((cartItem) => cartItem.partId === item.id);
   const [spinner, setSpinner] = useState(false);
   const darkModeClass = mode === 'dark' ? `${styles.dark_mode}` : '';
 
+  const toggleToCart = () =>
+    toggleCartItem(user.username, item.id, isInCart, setSpinner);
+
   return (
     <li className={`${styles.catalog__list__item} ${darkModeClass}`}>
-      https://youtu.be/qK1ENlEucpc?t=39326
       <Link href={`/catalog/${item.id}`} passHref legacyBehavior>
         <img src={JSON.parse(item.images)} alt={item.name} />
       </Link>
@@ -37,7 +42,8 @@ const CatalogItem = ({ item }: { item: IProductPart }) => {
       </div>
       <button
         className={`${styles.catalog__list__item__cart} ${isInCart ? styles.added : ''}`}
-        disabled={spinner}>
+        disabled={spinner}
+        onClick={toggleToCart}>
         {spinner ? (
           <div className={spinnerStyles.spinner} style={{ top: 6, left: 6 }} />
         ) : (

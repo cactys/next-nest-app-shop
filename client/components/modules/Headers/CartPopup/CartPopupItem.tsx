@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useUnit } from 'effector-react';
 import { $mode } from '@/context/mode';
 import { IShoppingCartItem } from '@/types/shopping-cart';
@@ -7,6 +7,8 @@ import styles from '@/styles/cartPopup/index.module.scss';
 import spinnerStyles from '@/styles/spinner/index.module.scss';
 import DeleteSvg from '@/components/elements/DeleteSvg/DeleteSvg';
 import { formatPrice } from '@/utils/common';
+import { removeItemFromCart } from '@/utils/shopping-cart';
+import { updateTotalPrice } from '@/utils/catalog';
 
 const CartPopupItem = ({ item }: { item: IShoppingCartItem }) => {
   const mode = useUnit($mode);
@@ -14,12 +16,25 @@ const CartPopupItem = ({ item }: { item: IShoppingCartItem }) => {
   const spinnerDarkModeClass =
     mode === 'dark' ? `${spinnerStyles.dark_mode}` : '';
   const [spinner, setSpinner] = useState(false);
+  const [price, setPrice] = useState(item.price);
+
+  useEffect(() => {
+    setPrice(price * item.count);
+  }, []);
+
+  useEffect(() => {
+    updateTotalPrice(price, item.partId);
+  }, [price]);
+
+  const increasePrice = () => setPrice(price + item.price);
+  const decreasePrice = () => setPrice(price - item.price);
+  const deleteCartItem = () => removeItemFromCart(item.partId, setSpinner);
 
   return (
     <li className={styles.cart__popup__list__item}>
       <div className={styles.cart__popup__list__item__top}>
         <div className={styles.cart__popup__list__item__img}>
-          <img src={item.image} alt={item.name} />
+          <img src={`${item.images}`} alt={item.name} />
         </div>
         <Link href={`/catalog/${item.partId}`} passHref legacyBehavior>
           <a
@@ -30,7 +45,7 @@ const CartPopupItem = ({ item }: { item: IShoppingCartItem }) => {
             </span>
           </a>
         </Link>
-        <button>
+        <button onClick={deleteCartItem}>
           <span>
             {spinner ? (
               <span
@@ -51,7 +66,8 @@ const CartPopupItem = ({ item }: { item: IShoppingCartItem }) => {
         ) : (
           <div />
         )}
-        <span className={styles.cart__popup__list__item__price}>
+        <span
+          className={`${styles.cart__popup__list__item__price} ${darkModeClass}`}>
           {formatPrice(item.price)} ₽
         </span>
       </div>

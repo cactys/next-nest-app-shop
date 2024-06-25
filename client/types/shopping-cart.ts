@@ -2,7 +2,7 @@ export interface IShoppingCartItem {
   id: number;
   name: string;
   price: number;
-  image: string;
+  images: string;
   in_stock: number;
   parts_manufacturer: string;
   product_manufacturer: string;
@@ -16,4 +16,12 @@ export interface IAddToCartFx {
   url: string;
   username: string;
   partId: number;
+}
+
+export interface IUpdateCartItemFx {
+  url: string;
+  payload: {
+    total_price?: number;
+    count?: number;
+  };
 }

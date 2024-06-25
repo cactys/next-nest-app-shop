@@ -29,7 +29,7 @@ const CartPopup = forwardRef<HTMLDivElement, IWrappedComponentProps>(
     const loadCartItems = async () => {
       try {
         const cartItems = await getCartElementsFx(
-          `/product-parts/cart/${user.userId}`
+          `/shopping-cart/${user.userId}`
         );
 
         setShoppingCart(cartItems);
