@@ -6,9 +6,7 @@ const Header = () => (
   <header className={styles.header}>
     <HeaderTop />
     <HeaderBottom />
-    https://youtu.be/mu1abT7LR1g?t=619
   </header>
 );
 
 export default Header;
-

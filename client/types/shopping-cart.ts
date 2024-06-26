@@ -4,7 +4,7 @@ export interface IShoppingCartItem {
   price: number;
   images: string;
   in_stock: number;
-  parts_manufacturer: string;
+  part_manufacturer: string;
   product_manufacturer: string;
   count: number;
   total_price: number;
@@ -24,4 +24,12 @@ export interface IUpdateCartItemFx {
     total_price?: number;
     count?: number;
   };
+}
+
+export interface ICartItemCounterProps {
+  totalCount: number;
+  partId: number;
+  initialCount: number;
+  increasePrice: VoidFunction;
+  decreasePrice: VoidFunction;
 }

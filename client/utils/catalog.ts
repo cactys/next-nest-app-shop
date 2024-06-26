@@ -2,8 +2,6 @@ import { NextRouter } from 'next/router';
 import { getQueryParamOnFirstRender, idGenerator } from './common';
 import { getProductPartsFx } from '@/app/api/productParts';
 import { setFilteredProductParts } from '@/context/productParts';
-import { updateCartItemFx } from '@/app/api/shopping-cart';
-import { updateCartItemTotalPrice } from '@/context/shopping-cart';
 
 const createManufacturerCheckboxObj = (title: string) => ({
   title,
@@ -118,12 +116,3 @@ export async function updateParamsAndFilters<T>(
   );
   setFilteredProductParts(data);
 }
-
-export const updateTotalPrice = async (total_price: number, partId: number) => {
-  const data = await updateCartItemFx({
-    url: `/shopping-cart/total-price/${partId}`,
-    payload: { total_price },
-  });
-
-  updateCartItemTotalPrice({ partId, total_price: data.total_price });
-};

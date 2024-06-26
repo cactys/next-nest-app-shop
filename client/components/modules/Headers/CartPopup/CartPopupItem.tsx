@@ -7,14 +7,14 @@ import styles from '@/styles/cartPopup/index.module.scss';
 import spinnerStyles from '@/styles/spinner/index.module.scss';
 import DeleteSvg from '@/components/elements/DeleteSvg/DeleteSvg';
 import { formatPrice } from '@/utils/common';
-import { removeItemFromCart } from '@/utils/shopping-cart';
-import { updateTotalPrice } from '@/utils/catalog';
+import { removeItemFromCart, updateTotalPrice } from '@/utils/shopping-cart';
+import CartItemCounter from '@/components/elements/CartItemCounter/CartItemCounter';
 
 const CartPopupItem = ({ item }: { item: IShoppingCartItem }) => {
   const mode = useUnit($mode);
   const darkModeClass = mode === 'dark' ? `${styles.dark_mode}` : '';
   const spinnerDarkModeClass =
-    mode === 'dark' ? `${spinnerStyles.dark_mode}` : '';
+    mode === 'dark' ? '' : `${spinnerStyles.dark_mode}`;
   const [spinner, setSpinner] = useState(false);
   const [price, setPrice] = useState(item.price);
 
@@ -40,7 +40,7 @@ const CartPopupItem = ({ item }: { item: IShoppingCartItem }) => {
           <a
             className={`${styles.cart__popup__list__item__text} ${darkModeClass}`}>
             <span>
-              {item.name.replace('.', '')},{item.parts_manufacturer},
+              {item.name.replace('.', '')}, {item.part_manufacturer},{' '}
               {item.product_manufacturer}
             </span>
           </a>
@@ -64,11 +64,17 @@ const CartPopupItem = ({ item }: { item: IShoppingCartItem }) => {
             Нет на складе
           </span>
         ) : (
-          <div />
+          <CartItemCounter
+            totalCount={item.in_stock}
+            partId={item.partId}
+            initialCount={item.count}
+            increasePrice={increasePrice}
+            decreasePrice={decreasePrice}
+          />
         )}
         <span
           className={`${styles.cart__popup__list__item__price} ${darkModeClass}`}>
-          {formatPrice(item.price)} ₽
+          {formatPrice(price)} ₽
         </span>
       </div>
     </li>
