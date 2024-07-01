@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import Slider from 'react-slick';
-import { useEffect } from 'react';
 import { useUnit } from 'effector-react';
-import { useMediaQuery } from '@/hooks/useMediaQuery';
-import { $mode } from '@/context/mode';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { useEffect } from 'react';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { $mode } from '@/context/mode';
 import { IDashboardSlider } from '@/types/dashboard';
 import styles from '@/styles/dashboard/index.module.scss';
 import skeletonStyles from '@/styles/skeleton/index.module.scss';

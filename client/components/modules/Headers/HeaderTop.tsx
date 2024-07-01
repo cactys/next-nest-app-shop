@@ -16,7 +16,6 @@ const HeaderTop = () => {
 
   return (
     <div className={styles.header__top}>
-      https://youtu.be/mu1abT7LR1g?t=1597
       <div className={`container ${styles.header__top__container}`}>
         {!isMedia950 && <CityButton />}
         {isMedia950 && (
