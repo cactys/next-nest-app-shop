@@ -7,8 +7,9 @@ import { $productPart, setProductPart } from '@/context/productPart';
 import { getProductPartFx } from '@/app/api/productParts';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
+import PartPage from '@/components/templates/PartPage/PartPage';
 
-const PartPage = ({ query }: { query: IQueryParams }) => {
+const CatalogPartPage = ({ query }: { query: IQueryParams }) => {
   const { shouldLoadContent } = useRedirectByUserCheck();
   const productPart = useUnit($productPart);
 
@@ -40,9 +41,7 @@ const PartPage = ({ query }: { query: IQueryParams }) => {
       {shouldLoadContent && (
         <Layout>
           <main>
-            <h1>
-              {productPart.name} {productPart.id}
-            </h1>
+            <PartPage />
             <div className="overlay" />
           </main>
         </Layout>
@@ -59,4 +58,4 @@ export async function getServerSideProps(context: { query: IQueryParams }) {
   };
 }
 
-export default PartPage;
+export default CatalogPartPage;

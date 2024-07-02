@@ -7,7 +7,7 @@ import { useState } from 'react';
 import PartImagesItem from './PartImagesItem';
 import PartSlider from './PartSlider';
 
-const PartImagesList = ({ src, callback, alt }: IPartImagesItemProps) => {
+const PartImagesList = () => {
   const productPart = useUnit($productPart);
   const isMobile = useMediaQuery(850);
   const images = productPart.images
