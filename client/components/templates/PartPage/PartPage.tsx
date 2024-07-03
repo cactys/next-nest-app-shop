@@ -63,6 +63,7 @@ const PartPage = () => {
 
   return (
     <section>
+      https://youtu.be/mu1abT7LR1g?t=3524
       <div className="container">
         <div className={`${styles.part__top} ${darkModeClass}`}>
           <h2 className={`${styles.part__title} ${darkModeClass}`}>
@@ -89,7 +90,7 @@ const PartPage = () => {
                 Артикул: {productPart.vendor_code}
               </span>
               <button
-                className={`${styles.part__info__btn} ${isInCart ? styles.in__cart : ''}`}
+                className={`${styles.part__info__btn} ${isInCart ? styles.in_cart : ''}`}
                 onClick={toggleToCart}>
                 {spinnerToggleCart ? (
                   <span
