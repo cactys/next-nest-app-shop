@@ -5,7 +5,7 @@ import { $productPart } from '@/context/productPart';
 import PartImagesList from '@/components/modules/PartPage/PartImagesList';
 import { formatPrice } from '@/utils/common';
 import { $shoppingCart } from '@/context/shopping-cart';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CartHoverCheckedSvg from '@/components/elements/CartHoverCheckedSvg/CartHoverCheckedSvg';
 import CartHoverSvg from '@/components/elements/CartHoverSvg/CartHoverSvg';
 import spinnerStyles from '@/styles/spinner/index.module.scss';
@@ -14,16 +14,44 @@ import { toggleCartItem } from '@/utils/shopping-cart';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import PartTabs from '@/components/modules/PartPage/PartTabs';
 import DashboardSlider from '@/components/modules/DashboardPage/DashboardSlider';
+import { toast } from 'react-toastify';
+import { getProductPartsFx } from '@/app/api/productParts';
+import {
+  $productParts,
+  setProductParts,
+  setProductPartsByPopularity,
+} from '@/context/productParts';
+import PartAccordion from '@/components/modules/PartPage/PartAccordion';
 
 const PartPage = () => {
   const mode = useUnit($mode);
   const user = useUnit($user);
   const productPart = useUnit($productPart);
+  const productParts = useUnit($productParts);
   const cartItem = useUnit($shoppingCart);
   const isMobile = useMediaQuery(850);
   const darkModeClass = mode === 'dark' ? `${styles.dark_mode}` : '';
   const isInCart = cartItem.some((item) => item.partId === productPart.id);
   const [spinnerToggleCart, setSpinnerToggleCart] = useState(false);
+  const [spinnerSlider, setSpinnerSlider] = useState(false);
+
+  useEffect(() => {
+    loadProductPart();
+  }, []);
+
+  const loadProductPart = async () => {
+    try {
+      setSpinnerSlider(true);
+      const data = await getProductPartsFx('/product-parts?limit=20&offset=0');
+
+      setProductParts(data);
+      setProductPartsByPopularity();
+    } catch (error) {
+      toast.error((error as Error).message);
+    } finally {
+      setTimeout(() => setSpinnerSlider(false), 1000);
+    }
+  };
 
   const toggleToCart = () =>
     toggleCartItem(
@@ -85,12 +113,43 @@ const PartPage = () => {
             </div>
           </div>
         </div>
+        {isMobile && (
+          <div className={styles.part__accordion}>
+            <div className={styles.part__accordion__inner}>
+              <PartAccordion title="Описание">
+                <div
+                  className={`${styles.part__accordion__content} ${darkModeClass}`}>
+                  <h3
+                    className={`${styles.part__tabs__content__title} ${darkModeClass}`}>
+                    {productPart.name}
+                  </h3>
+                  <p
+                    className={`${styles.part__tabs__content__text} ${darkModeClass}`}>
+                    {productPart.description}
+                  </p>
+                </div>
+              </PartAccordion>
+            </div>
+            <PartAccordion title="Совместимость">
+              <div
+                className={`${styles.part__accordion__content} ${darkModeClass}`}>
+                <p
+                  className={`${styles.part__tabs__content__text} ${darkModeClass}`}>
+                  {productPart.compatibility}
+                </p>
+              </div>
+            </PartAccordion>
+          </div>
+        )}
         <div className={`${styles.part__bottom} ${darkModeClass}`}>
           <h2 className={`${styles.part__title} ${darkModeClass}`}>
             Вам понравится
           </h2>
-          <DashboardSlider goToPartPage />
-          https://youtu.be/mu1abT7LR1g?t=2931
+          <DashboardSlider
+            goToPartPage
+            spinner={spinnerSlider}
+            items={productParts.rows || []}
+          />
         </div>
       </div>
     </section>
