@@ -27,6 +27,15 @@ const DashboardPage = () => {
     loadProductParts();
   }, []);
 
+  useEffect(() => {
+    if (shoppingCart.length) {
+      setShowAlert(true);
+      return;
+    }
+
+    setShowAlert(false);
+  }, [shoppingCart.length]);
+
   const loadProductParts = async () => {
     try {
       setSpinner(true);
@@ -56,7 +65,13 @@ const DashboardPage = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className={`${styles.dashboard__alert} ${darkModeClass}`}>
-              <CartAlert count={shoppingCart.length} closeAlert={closeAlert} />
+              <CartAlert
+                count={shoppingCart.reduce(
+                  (defaultCount, item) => defaultCount + item.count,
+                  0
+                )}
+                closeAlert={closeAlert}
+              />
             </motion.div>
           )}
         </AnimatePresence>

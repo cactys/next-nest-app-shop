@@ -6,22 +6,31 @@ import { useUnit } from 'effector-react';
 import { $productPart, setProductPart } from '@/context/productPart';
 import { getProductPartFx } from '@/app/api/productParts';
 import { toast } from 'react-toastify';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import PartPage from '@/components/templates/PartPage/PartPage';
+import { useRouter } from 'next/router';
+import Custom404 from '../404';
 
 const CatalogPartPage = ({ query }: { query: IQueryParams }) => {
   const { shouldLoadContent } = useRedirectByUserCheck();
   const productPart = useUnit($productPart);
+  const [error, setError] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     loadProductPart();
-  }, []);
+  }, [router.asPath]);
 
   const loadProductPart = async () => {
     try {
       const data = await getProductPartFx(
         `/product-parts/find/${query.partId}`
       );
+
+      if (!data) {
+        setError(true);
+        return;
+      }
 
       setProductPart(data);
     } catch (error) {
@@ -38,13 +47,17 @@ const CatalogPartPage = ({ query }: { query: IQueryParams }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" type="image/svg" sizes="32x32" href="/img/logo.svg" />
       </Head>
-      {shouldLoadContent && (
-        <Layout>
-          <main>
-            <PartPage />
-            <div className="overlay" />
-          </main>
-        </Layout>
+      {error ? (
+        <Custom404 />
+      ) : (
+        shouldLoadContent && (
+          <Layout>
+            <main>
+              <PartPage />
+              <div className="overlay" />
+            </main>
+          </Layout>
+        )
       )}
     </>
   );

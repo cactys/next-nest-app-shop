@@ -73,7 +73,8 @@ const DashboardSlider = ({
             <div className={styles.dashboard__slide__inner}>
               <Link
                 href={goToPartPage ? `/catalog/${item.id}` : '/catalog'}
-                legacyBehavior>
+                legacyBehavior
+                passHref>
                 <a>
                   <h3 className={styles.dashboard__slide__title}>
                     {item.name}

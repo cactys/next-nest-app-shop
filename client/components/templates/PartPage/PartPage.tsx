@@ -63,7 +63,6 @@ const PartPage = () => {
 
   return (
     <section>
-      https://youtu.be/mu1abT7LR1g?t=3524
       <div className="container">
         <div className={`${styles.part__top} ${darkModeClass}`}>
           <h2 className={`${styles.part__title} ${darkModeClass}`}>
@@ -78,7 +77,7 @@ const PartPage = () => {
               <span className={styles.part__info__stock}>
                 {productPart.in_stock > 0 ? (
                   <span className={styles.part__info__stock__success}>
-                    Есть на складе
+                    На складе {productPart.in_stock} шт.
                   </span>
                 ) : (
                   <span className={styles.part__info__stock__not}>
