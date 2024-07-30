@@ -3,6 +3,7 @@ import { useUnit } from 'effector-react';
 import styles from '@/styles/order/index.module.scss';
 import { $shoppingCart, $totalPrice } from '@/context/shopping-cart';
 import { formatPrice } from '@/utils/common';
+import OrderAccordion from '@/components/modules/OrderPage/OrderAccordion';
 
 const OrderPage = () => {
   const mode = useUnit($mode);
@@ -14,11 +15,11 @@ const OrderPage = () => {
     <section className={styles.order}>
       <div className="container">
         <h2 className={`${styles.order__title} ${darkModeClass}`}>
-          Оформление заказа https://youtu.be/mu1abT7LR1g?t=4291
+          Оформление заказа
         </h2>
         <div className={styles.order__inner}>
           <div className={styles.order__cart}>
-            <div />
+            <OrderAccordion />
           </div>
           <div className={styles.order__pay}>
             <h3 className={`${styles.order__pay__title} ${darkModeClass}`}>

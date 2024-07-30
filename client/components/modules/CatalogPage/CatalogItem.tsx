@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { $mode } from '@/context/mode';
-import { useUnit } from 'effector-react';
-import { useState } from 'react';
+import { useStore, useUnit } from 'effector-react';
 import { $shoppingCart } from '@/context/shopping-cart';
 import { IProductPart } from '@/types/product-parts';
 import Link from 'next/link';
@@ -12,17 +11,17 @@ import styles from '@/styles/catalog/index.module.scss';
 import spinnerStyles from '@/styles/spinner/index.module.scss';
 import { $user } from '@/context/user';
 import { toggleCartItem } from '@/utils/shopping-cart';
+import { removeFromCartElementsFx } from '@/app/api/shopping-cart';
 
 const CatalogItem = ({ item }: { item: IProductPart }) => {
   const mode = useUnit($mode);
   const user = useUnit($user);
   const shoppingCart = useUnit($shoppingCart);
   const isInCart = shoppingCart.some((cartItem) => cartItem.partId === item.id);
-  const [spinner, setSpinner] = useState(false);
+  const spinner = useStore(removeFromCartElementsFx.pending);
   const darkModeClass = mode === 'dark' ? `${styles.dark_mode}` : '';
 
-  const toggleToCart = () =>
-    toggleCartItem(user.username, item.id, isInCart, setSpinner);
+  const toggleToCart = () => toggleCartItem(user.username, item.id, isInCart);
 
   return (
     <li className={`${styles.catalog__list__item} ${darkModeClass}`}>

@@ -1,5 +1,5 @@
 import { $mode } from '@/context/mode';
-import { useUnit } from 'effector-react';
+import { useStore, useUnit } from 'effector-react';
 import styles from '@/styles/part/index.module.scss';
 import { $productPart } from '@/context/productPart';
 import PartImagesList from '@/components/modules/PartPage/PartImagesList';
@@ -22,6 +22,7 @@ import {
   setProductPartsByPopularity,
 } from '@/context/productParts';
 import PartAccordion from '@/components/modules/PartPage/PartAccordion';
+import { removeFromCartElementsFx } from '@/app/api/shopping-cart';
 
 const PartPage = () => {
   const mode = useUnit($mode);
@@ -32,8 +33,8 @@ const PartPage = () => {
   const isMobile = useMediaQuery(850);
   const darkModeClass = mode === 'dark' ? `${styles.dark_mode}` : '';
   const isInCart = cartItem.some((item) => item.partId === productPart.id);
-  const [spinnerToggleCart, setSpinnerToggleCart] = useState(false);
-  const [spinnerSlider, setSpinnerSlider] = useState(false);
+  const spinnerToggleCart = useStore(removeFromCartElementsFx.pending);
+  const spinnerSlider = useStore(getProductPartsFx.pending);
 
   useEffect(() => {
     loadProductPart();
@@ -41,25 +42,17 @@ const PartPage = () => {
 
   const loadProductPart = async () => {
     try {
-      setSpinnerSlider(true);
       const data = await getProductPartsFx('/product-parts?limit=20&offset=0');
 
       setProductParts(data);
       setProductPartsByPopularity();
     } catch (error) {
       toast.error((error as Error).message);
-    } finally {
-      setTimeout(() => setSpinnerSlider(false), 1000);
     }
   };
 
   const toggleToCart = () =>
-    toggleCartItem(
-      user.username,
-      productPart.id,
-      isInCart,
-      setSpinnerToggleCart
-    );
+    toggleCartItem(user.username, productPart.id, isInCart);
 
   return (
     <section>

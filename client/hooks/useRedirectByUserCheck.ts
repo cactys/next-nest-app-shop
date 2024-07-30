@@ -3,7 +3,7 @@ import { setUser } from '@/context/user';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 
-const useRedirectByUserCheck = (isAuthPage = false) => {
+export const useRedirectByUserCheck = (isAuthPage = false) => {
   const [shouldLoadContent, setShouldLoadContent] = useState(false);
   const router = useRouter();
   const shouldCheckAuth = useRef(true);
@@ -40,5 +40,3 @@ const useRedirectByUserCheck = (isAuthPage = false) => {
 
   return { shouldLoadContent };
 };
-
-export default useRedirectByUserCheck;

@@ -1,16 +1,30 @@
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { IOrderAccordionProps } from '@/types/order';
 import styles from '@/styles/order/index.module.scss';
 import { $mode } from '@/context/mode';
 import { useUnit } from 'effector-react';
 import DoneSvg from '@/components/elements/DoneSvg/DoneSvg';
+import { $shoppingCart, $totalPrice } from '@/context/shopping-cart';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
+import EditSvg from '@/components/elements/EditSvg/EditSvg';
+import { useState } from 'react';
+import CartPopupItem from '../Headers/CartPopup/CartPopupItem';
+import OrderItem from './OrderItem';
+import { formatPrice } from '@/utils/common';
 
 const OrderAccordion = ({
   setOrderIsReady,
   showDoneIcon,
 }: IOrderAccordionProps) => {
   const mode = useUnit($mode);
+  const shoppingCart = useUnit($shoppingCart);
+  const totalPrice = useUnit($totalPrice);
   const darkModeClass = mode === 'dark' ? `${styles.dark_mode}` : '';
+  const isMedia550 = useMediaQuery(550);
+  const [expanded, setExpanded] = useState(false);
+
+  const openAccordion = () => setExpanded(true);
+  const closeAccordion = () => setExpanded(false);
 
   return (
     <>
@@ -23,9 +37,70 @@ const OrderAccordion = ({
               <DoneSvg />
             </span>
           )}
-          Корзина
+          Корзина https://youtu.be/mu1abT7LR1g?t=4929
         </h3>
+        <button
+          className={styles.order__cart__title__btn}
+          onClick={openAccordion}>
+          <span>
+            <EditSvg />
+          </span>
+          {isMedia550 ? '' : 'Редактировать'}
+        </button>
       </motion.div>
+      <AnimatePresence initial={false}>
+        {expanded && (
+          <motion.div
+            key="content"
+            initial="collapsed"
+            animate="open"
+            exit="collapsed"
+            variants={{
+              open: { opacity: 1, height: 'auto' },
+              collapsed: { opacity: 0, height: 0 },
+            }}
+            style={{ overflow: 'hidden' }}
+            transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}>
+            <div className={`${styles.order__cart__content} ${darkModeClass}`}>
+              <ul className={styles.order__cart__list}>
+                {shoppingCart.length ? (
+                  shoppingCart.map((item) =>
+                    isMedia550 ? (
+                      <CartPopupItem key={item.id} item={item} />
+                    ) : (
+                      <OrderItem key={item.id} item={item} />
+                    )
+                  )
+                ) : (
+                  <li className={styles.order__cart__empty}>
+                    <span
+                      className={`${styles.order__cart__empty__text} ${darkModeClass}`}>
+                      Корзина пуста
+                    </span>
+                  </li>
+                )}
+              </ul>
+              <div className={styles.order__cart__footer}>
+                <div className={styles.order__cart__footer__total}>
+                  <span
+                    className={`${styles.order__cart__footer__text} ${darkModeClass}`}>
+                    Общая сумма заказа:
+                  </span>
+                  <span className={styles.order__cart__footer__price}>
+                    {formatPrice(totalPrice)} ₽
+                  </span>
+                </div>
+                <button
+                  className={styles.order__cart__footer__btn}
+                  onClick={closeAccordion}
+                  disabled={!shoppingCart.length}>
+                  Продолжить
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };
