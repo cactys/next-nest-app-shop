@@ -12,6 +12,7 @@ import spinnerStyles from '@/styles/spinner/index.module.scss';
 import { $user } from '@/context/user';
 import { toggleCartItem } from '@/utils/shopping-cart';
 import { removeFromCartElementsFx } from '@/app/api/shopping-cart';
+import { $productPart } from '@/context/productPart';
 
 const CatalogItem = ({ item }: { item: IProductPart }) => {
   const mode = useUnit($mode);

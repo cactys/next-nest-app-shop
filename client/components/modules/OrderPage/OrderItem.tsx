@@ -35,34 +35,36 @@ const OrderItem = ({ item }: { item: IShoppingCartItem }) => {
             </a>
           </Link>
         </div>
-        {isMedia1160 && item.in_stock === 0 ? (
-          <span className={styles.order__cart__list__item__empty}>
-            Нет на складе
-          </span>
-        ) : (
-          <CartItemCounter
-            totalCount={item.in_stock}
-            partId={item.partId}
-            initialCount={item.count}
-            increasePrice={increasePrice}
-            decreasePrice={decreasePrice}
-          />
-        )}
+        {isMedia1160 &&
+          (item.in_stock === 0 ? (
+            <span className={styles.order__cart__list__item__empty}>
+              Нет на складе
+            </span>
+          ) : (
+            <CartItemCounter
+              totalCount={item.in_stock}
+              partId={item.partId}
+              initialCount={item.count}
+              increasePrice={increasePrice}
+              decreasePrice={decreasePrice}
+            />
+          ))}
       </div>
       <div className={styles.order__cart__list__item__right}>
-        {!isMedia1160 && item.in_stock === 0 ? (
-          <span className={styles.order__cart__list__item__empty}>
-            Нет на складе
-          </span>
-        ) : (
-          <CartItemCounter
-            totalCount={item.in_stock}
-            partId={item.partId}
-            initialCount={item.count}
-            increasePrice={increasePrice}
-            decreasePrice={decreasePrice}
-          />
-        )}
+        {!isMedia1160 &&
+          (item.in_stock === 0 ? (
+            <span className={styles.order__cart__list__item__empty}>
+              Нет на складе
+            </span>
+          ) : (
+            <CartItemCounter
+              totalCount={item.in_stock}
+              partId={item.partId}
+              initialCount={item.count}
+              increasePrice={increasePrice}
+              decreasePrice={decreasePrice}
+            />
+          ))}
         <span
           className={`${styles.order__cart__list__item__price} ${darkModeClass}`}>
           {formatPrice(price)} ₽

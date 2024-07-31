@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import useRedirectByUserCheck from '@/hooks/useRedirectByUserCheck';
+import { useRedirectByUserCheck } from '@/hooks/useRedirectByUserCheck';
 import Layout from '@/components/layout/Layout';
 import { IQueryParams } from '@/types/catalog';
 import { useUnit } from 'effector-react';

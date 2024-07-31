@@ -220,8 +220,6 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
     }
   };
 
-  console.log(productParts.rows);
-
   return (
     <section className={styles.catalog}>
       <div className={`container ${styles.catalog__container}`}>

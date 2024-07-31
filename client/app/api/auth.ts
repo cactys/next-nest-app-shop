@@ -8,7 +8,6 @@ import { HTTPStatus } from '@/constans';
 export const signUpFx = createEffect(
   async ({ url, username, password, email }: ISignUpFx) => {
     const { data } = await api.post(url, { username, password, email });
-    console.log(data);
 
     if (data.warningMessage) {
       toast.warning(data.warningMessage);

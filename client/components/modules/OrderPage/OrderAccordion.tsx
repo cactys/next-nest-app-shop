@@ -21,10 +21,16 @@ const OrderAccordion = ({
   const totalPrice = useUnit($totalPrice);
   const darkModeClass = mode === 'dark' ? `${styles.dark_mode}` : '';
   const isMedia550 = useMediaQuery(550);
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(true);
 
-  const openAccordion = () => setExpanded(true);
-  const closeAccordion = () => setExpanded(false);
+  const openAccordion = () => {
+    setOrderIsReady(false);
+    setExpanded(true);
+  };
+  const closeAccordion = () => {
+    setOrderIsReady(true);
+    setExpanded(false);
+  };
 
   return (
     <>
@@ -37,7 +43,7 @@ const OrderAccordion = ({
               <DoneSvg />
             </span>
           )}
-          Корзина https://youtu.be/mu1abT7LR1g?t=4929
+          Корзина
         </h3>
         <button
           className={styles.order__cart__title__btn}
