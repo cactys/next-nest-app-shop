@@ -63,7 +63,7 @@ const OrderPage = () => {
         setShoppingCart([]);
       }
     } catch (error) {
-      toast.error((error as Error).message);
+      console.log((error as Error).message);
       await removeFromCartElementsFx(`/shopping-cart/all/${user.userId}`);
       setShoppingCart([]);
     }
